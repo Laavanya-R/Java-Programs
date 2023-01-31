@@ -1,0 +1,147 @@
+package myJavaPackageLessons;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Average 
+{
+	public static void main(String[] args) 
+	{
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter no of decimals allowed = ");
+		int noOfDecimals = sc.nextInt();
+		
+		System.out.println("Enter number of subjects = ");
+		int noOfSubjects = sc.nextInt();
+		
+		float[] marks = new float[noOfSubjects];
+
+		for(int i=0; i<noOfSubjects; i++)					//Getting all subject marks and storing in an float array
+		{
+		System.out.println("Enter Subject " + (i+1) + " mark = ");
+		String mark = sc.next();							//Getting mark as String Input so that decimal numbers can be extracted
+
+		if (noOfDecimals(mark)>noOfDecimals)				//if number of decimals is more than the user input, ask user to enter again and again
+		{
+			System.out.println("Enter marks with maximum of 2 decimals places");
+			i--;
+		}
+		else
+			marks[i] = Float.parseFloat(mark);			//load the correctly entered marks in a float array
+		
+		//System.out.println(mark);
+
+		}
+		//System.out.println(Arrays.toString(marks));
+		
+		System.out.println("Round off needed? Yes/No : ");
+		String roundOff = sc.next();
+		
+		sc.close();
+		
+		float averageMarks = averageCalc(marks);
+				
+		System.out.println("Output without roundoff and multiple decimal places = " + averageMarks);
+		
+		float roundedAvrWithDecimal;
+		if (roundOff.equals("No"))
+		{
+			if (	(  ( (int)(averageMarks*1000) )%10)  >  4  )
+			{
+				roundedAvrWithDecimal = (float)(  (int)(averageMarks*100)+1  )/100  ; //12.45, 12.86
+			}
+			else 
+				roundedAvrWithDecimal = (float)(  (int)(averageMarks*100)  )/100 ; //11.03, 11.26
+			
+			System.out.println(roundedAvrWithDecimal);
+
+		}
+		if (roundOff.equals("Yes"))
+		{
+			if (	((int)(averageMarks*10)%10)  >  4  )
+			{
+				System.out.println("Average 1 is = " + ((  (int)(averageMarks)  )+1)  ); //16.7, 20.8
+			}
+			else 
+				System.out.println("Average 2 is = " + (int)(averageMarks)  ); //12.34, 12.45
+		}
+
+	}
+
+	
+	static float averageCalc(float marks[])
+	{
+		float sum =0, average;
+		for(int i =0; i<marks.length; i++)
+		{
+			sum = sum+marks[i];
+		}
+		average = sum/marks.length;
+		return average;
+	}
+
+	
+	static int noOfDecimals(String str)
+	{
+		char[] chArr = str.toCharArray();
+		
+		boolean decimalFlag = false;
+		int noOfDecimals = 0;
+		for(int i=0; i<chArr.length; i++)
+		{
+			if (decimalFlag)
+			{
+				noOfDecimals++;
+			}
+
+			if(chArr[i] == '.') 
+				{decimalFlag = true;}
+		}
+
+		return noOfDecimals;
+		
+	}
+	
+	static int roundOff(String str)
+	{
+		char[] chArr = str.toCharArray();
+		
+		boolean decimalFlag = false;
+		int deciDigits = 0;
+		for(int i=0; i<chArr.length; i++)
+		{
+			if (decimalFlag)
+			{
+				deciDigits = deciDigits*10 + Integer.parseInt(String.valueOf(chArr[i]));
+			}
+
+			if(chArr[i] == '.') 
+				{decimalFlag = true;}
+		}
+
+		return deciDigits;
+	}
+
+	/*
+	static int extractDecimalDigits(String str)
+	{
+		char[] chArr = str.toCharArray();
+		
+		boolean decimalFlag = false;
+		int deciDigits = 0;
+		for(int i=0; i<chArr.length; i++)
+		{
+			if (decimalFlag)
+			{
+				deciDigits = deciDigits*10 + Integer.parseInt(String.valueOf(chArr[i]));
+			}
+
+			if(chArr[i] == '.') 
+				{decimalFlag = true;}
+		}
+
+		return deciDigits;
+	}
+	*/
+
+}
