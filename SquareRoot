@@ -1,0 +1,54 @@
+package myJavaPackageLessons;
+
+import java.util.Scanner;
+
+public class SquareRoot 
+{
+	public static void main(String[] args) 
+	{
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Square root for? ");
+	
+		//while(sc.hasNextLine())
+		//{
+		int num = sc.nextInt();
+		//float floatNum = sc.nextFloat();
+		//getSqrRoot(num);
+		System.out.println("Square root of " + num + " is " + getSqrRoot(num));
+		//System.out.println(getSqrRoot(floatNum));		
+		//System.out.println("Got more inputs? Enter here : ");
+		//}
+		sc.close();
+
+
+	}
+	
+	static int getSqrRoot(int num)
+	{
+		//Repeated subtraction method
+		int oddNum = 1;			//oddNum is incremented and used in subtraction method 
+		int count = 0;
+		while(num>0)
+		{
+		num = num-oddNum;
+		oddNum = oddNum + 2;
+		count++;
+		}
+		return count;
+	}
+	static float getSqrRoot(float floatNum)
+	{
+		//Repeated subtraction method
+		int oddNum = 1;
+		int count = 0;
+		while(floatNum>0)
+		{
+			floatNum = floatNum-oddNum;
+		oddNum = oddNum + 2;
+		count++;
+		}
+		return count;
+	}
+
+	
+}
