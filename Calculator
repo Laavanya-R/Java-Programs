@@ -1,0 +1,126 @@
+package myJavaPackageLessons;
+
+import java.util.Scanner;
+
+public class Calculator 
+{
+	public static void main(String args[])
+	{
+		System.out.println("Operation to perform?");
+		System.out.println("Enter + for Add, - for subtract, * for multiply, / for divide, rem for remainder, ^ for power, % for percentage"); 
+
+		Scanner sc = new Scanner(System.in);
+		while(sc.hasNext())
+		{
+		String operand = sc.next();						//get operation to be performed as input
+
+		System.out.println("Enter the 1st operand : ");  //get first operand as input
+		float fNum = sc.nextFloat();
+		//System.out.println(fNum);	
+		System.out.println("Enter the 2nd operand : ");  //get second operand as input
+		float sNum = sc.nextFloat();
+		//System.out.println(sNum);	
+		
+		switch(operand)
+		{
+		case "+" :
+			add(fNum, sNum);
+			break;
+		case "-" :
+			subtract(fNum, sNum);
+			break;
+		case "*" :
+			multiply(fNum, sNum);
+			break;
+		case "/" :
+			divide(fNum, sNum);
+			break;
+		case "rem" :
+			remainder(fNum, sNum);
+			break;
+		case "^" :
+			power(fNum, sNum);
+			break;
+		case "%" :
+			percentage(fNum, sNum);
+			break;	
+		default :
+			System.out.println("Not a valid operand");		
+		}
+		
+		System.out.println("Close calculator? Y/N :");
+		String close = sc.next();
+		if (close.equals("Y"))
+		{
+			sc.close();
+			break;
+		}
+		else if(close.equals("N"))
+		{
+			System.out.println("Operation to perform?");
+			System.out.println("Enter + for Add, - for subtract, * for multiply, / for divide, rem for remainder, ^ for power, % for percentage"); 
+		}
+		}
+
+	}
+
+	static void add(float x, float y)
+	{
+		float sum = x+y;
+		System.out.println("Sum of the given numbers is : " + sum);
+		
+		//return sum;
+	}
+	static void subtract(float x, float y)
+	{
+		float diff;
+		if (x<y) diff = x-y;
+		else diff = y-x;
+		System.out.println("Difference of the given numbers is : " + diff);
+
+		//return sum;
+	}
+	static void multiply(float x, float y)
+	{
+		System.out.println("Product of the given numbers is : " + x*y);
+
+		//return x*y;
+	}
+	static void divide(float x, float y)
+	{
+		float quotient;
+		if (x>y) quotient = x/y;
+		else quotient = y/x;
+		System.out.println("Quotient obtained for the given numbers is : " + quotient);
+		
+		//return quotient;
+	}
+	static void remainder(float x, float y)
+	{
+		float rem;
+		if (x>y) rem = x%y;
+		else rem = y%x;
+		System.out.println("Reminder obtained for the given numbers is : " + rem);
+
+		//return rem;
+	}
+	static void power(float x, float y)
+	{
+		float pow = 1;
+		for(int i = 0; i<y; i++)
+		{
+			pow = x*pow;
+		}
+
+		System.out.println("Power of the given number is : " + pow);
+		
+	}
+	static void percentage(float x, float y)
+	{
+		float percent = (x/y) * 100;
+		System.out.println("Reminder obtained for the given numbers is : " + percent);
+		
+	}
+
+
+}
