@@ -1,0 +1,100 @@
+package myJavaPackageLessons;
+
+import java.util.Scanner;
+
+public class DayOfYear {
+
+	public static void main(String[] args) 
+	{
+		System.out.println("Enter the date in dd-mmm-yyyy format : ");
+		Scanner sc = new Scanner(System.in);
+		String str = sc.next();
+		sc.close();
+
+		//System.out.println(str);
+	
+		String strDt = str.substring(0,2);
+		//System.out.println(strDt);
+
+		String month = str.substring(3,6);
+		//System.out.println(month);
+
+		String strYr = str.substring(7,11);
+		//System.out.println(strYr);
+
+		int intDt = Integer.parseInt(strDt);		//covert string to int
+		int intYr = Integer.parseInt(strYr);		//covert string to int
+		
+		int noOfDays = 0;
+		
+		switch(month)
+		{
+		case "Jan" :
+			noOfDays = intDt;
+			break;
+		case "Feb" :
+			noOfDays = intDt + 31;
+			break;
+		case "Mar" :
+			noOfDays = intDt + 59;
+			break;
+		case "Apr" :
+			noOfDays = intDt + 90;
+			break;
+		case "May" :
+			noOfDays = intDt + 120;
+			break;
+		case "Jun" :
+			noOfDays = intDt + 151;
+			break;
+		case "Jul" :
+			noOfDays = intDt + 181;
+			break;
+		case "Aug" :
+			noOfDays = intDt + 212;
+			break;
+		case "Sep" :
+			noOfDays = intDt + 243;
+			break;
+		case "Oct" :
+			noOfDays = intDt + 273;
+			break;
+		case "Nov" :
+			noOfDays = intDt + 304;
+			break;
+		case "Dec" :
+			noOfDays = intDt + 334;
+			break;
+
+		}
+		
+		if(isLeapYear(intYr))
+		{
+			noOfDays = noOfDays+1;				//add a day if it is leap year
+		}
+	System.out.println("The day of the year is : " + noOfDays);
+
+
+	}
+	
+	static boolean isLeapYear(int yr)
+	{
+		if (yr%4 == 0)					
+		{
+			if (yr%100 == 0)
+			{
+				if (yr%400 == 0)
+						{return true;} //if year is divisible by 4 & 100 & 400 it is leap year
+				else
+					return false;	 	//if year is divisible by 4 & 100 but not by 400 it is not leap year
+			}
+			else
+				return true; 			//if year is divisible by 4 but not by 100 it is leap year
+		}
+		else
+			return false; 				//if year is not divisible by 4 it is not leap year
+		
+
+	}
+
+}
