@@ -6,63 +6,78 @@ public class DayOfYear {
 
 	public static void main(String[] args) 
 	{
-		System.out.println("Enter the date in dd-mmm-yyyy format : ");
+		System.out.println("Enter the date in dd-Mmm-yyyy format : ");
 		Scanner sc = new Scanner(System.in);
-		String str = sc.next();
+		String str = sc.next();						//get date in dd-Mmm-yyyy format as string
 		sc.close();
 
 		//System.out.println(str);
 	
-		String strDt = str.substring(0,2);
+		String strDt = str.substring(0,2);			//extract date from string
 		//System.out.println(strDt);
 
-		String month = str.substring(3,6);
+		String month = str.substring(3,6);			//extract month from string
 		//System.out.println(month);
 
-		String strYr = str.substring(7,11);
+		String strYr = str.substring(7,11);			//extract year from string
 		//System.out.println(strYr);
 
-		int intDt = Integer.parseInt(strDt);		//covert string to int
-		int intYr = Integer.parseInt(strYr);		//covert string to int
+		int intDt = Integer.parseInt(strDt);		//covert date from string to int
+		int intYr = Integer.parseInt(strYr);		//covert year from string to int
+		
+		//if ()
 		
 		int noOfDays = 0;
 		
 		switch(month)
 		{
 		case "Jan" :
+			if(intDt>31)	{System.out.println("Enter valid date  - Only 31 days in Jan"); System.exit(0);}
 			noOfDays = intDt;
 			break;
 		case "Feb" :
+			if(  isLeapYear(intYr) && intDt>29  )	{System.out.println("Enter valid date  - Max 29 days in Feb for Leap Year : " + intYr); System.exit(0);}
+			if(  (isLeapYear(intYr) == false) && intDt>28  )	{System.out.println("Enter valid date  - Max 28 days in Feb for non Leap Year : " + intYr); System.exit(0);}
 			noOfDays = intDt + 31;
 			break;
 		case "Mar" :
+			if(intDt>31)	{System.out.println("Enter valid date  - Only 31 days in Mar"); System.exit(0);}
 			noOfDays = intDt + 59;
 			break;
 		case "Apr" :
+			if(intDt>30)	{System.out.println("Enter valid date  - Only 30 days in Apr"); System.exit(0);}
 			noOfDays = intDt + 90;
 			break;
 		case "May" :
+			if(intDt>31)	{System.out.println("Enter valid date  - Only 31 days in May"); System.exit(0);}
 			noOfDays = intDt + 120;
 			break;
 		case "Jun" :
+			if(intDt>30)	{System.out.println("Enter valid date  - Only 30 days in Jun"); System.exit(0);}
 			noOfDays = intDt + 151;
 			break;
 		case "Jul" :
+			if(intDt>31)	{System.out.println("Enter valid date  - Only 31 days in Jul"); System.exit(0);}
 			noOfDays = intDt + 181;
 			break;
 		case "Aug" :
+			if(intDt>31)	{System.out.println("Enter valid date  - Only 31 days in Aug"); System.exit(0);}
 			noOfDays = intDt + 212;
 			break;
 		case "Sep" :
+			if(intDt>30)	{System.out.println("Enter valid date  - Only 30 days in Sep"); System.exit(0);}
 			noOfDays = intDt + 243;
 			break;
 		case "Oct" :
+			if(intDt>31)	{System.out.println("Enter valid date  - Only 31 days in Oct"); System.exit(0);}
 			noOfDays = intDt + 273;
 			break;
 		case "Nov" :
+			if(intDt>30)	{System.out.println("Enter valid date  - Only 30 days in Nov"); System.exit(0);}
 			noOfDays = intDt + 304;
 			break;
 		case "Dec" :
+			if(intDt>31)	{System.out.println("Enter valid date  - Only 31 days in Dec"); System.exit(0);}
 			noOfDays = intDt + 334;
 			break;
 
