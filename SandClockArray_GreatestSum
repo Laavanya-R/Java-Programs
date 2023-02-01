@@ -1,0 +1,63 @@
+package myPracticePackage;
+
+public class SandClockArray 
+{
+
+	public static void main(String[] args) 
+	{
+		int[][] inputArr = { { 1, 2, 3, 4, 5, 6 }, 
+							 { 1, 1, 1, 9, 1, 1 }, 
+							 { 2, 2, 2, 9, 2, 2 }, 
+							 { 3, 3, 3, 3, 3, 3 },
+							 { 4, 4, 4, 4, 4, 4 }, 
+							 { 1, 2, 3, 4, 5, 6 } };
+
+		// Printing the input array
+		System.out.println("The input array is : ");
+		for (int i = 0; i < inputArr.length; i++) 				//for every row
+		{
+			for (int j = 0; j < inputArr[i].length; j++) 		//for every column
+			{
+				System.out.print(inputArr[i][j] + " ");
+			}
+			System.out.println();
+		}
+		
+		int maxSum=0;
+		int rowNum=0;
+		int colNum=0;
+	
+		for (int i = 0; i < (inputArr.length - 2); i++) 		//for every sandclock starting in this row -> from 0 till no of rows - 2
+		{
+
+			for (int j = 0; j < (inputArr[i].length - 2); j++) 	//for every sandclock starting in this column -> from 0 till no of columns - 2
+			{
+				
+				//finding sum of the integers in the sandclock starting at[i][j]
+				int sum = inputArr[i][j] + inputArr[i][j + 1] + inputArr[i][j + 2] + inputArr[i + 1][j + 1]
+						+ inputArr[i + 2][j] + inputArr[i + 2][j + 1] + inputArr[i + 2][j + 2]; 		
+				
+				
+				//updating maxSum variable if the new sum found is largest so far
+				if (sum > maxSum) 
+				{
+					maxSum = sum;
+					rowNum = i;		//get row number of the sandclock with greatest sum
+					colNum = j;		//get column number of the sandclock with greatest sum
+				}
+				
+			}
+
+		}		
+		System.out.println("The greatest of sum of integers in all possible sandclocks = " + maxSum);
+		
+		
+		//printing the sanclock for which the sum of its integers is the greatest
+		System.out.println("The sandclock which has the largest sum is : ");
+
+		System.out.println(inputArr[rowNum][colNum] + " " +  inputArr[rowNum][colNum+1] + " " +  inputArr[rowNum][colNum+2]);
+		System.out.println("  " +  inputArr[rowNum+1][colNum+1] + "   " );
+		System.out.println(inputArr[rowNum+2][colNum] + " " +  inputArr[rowNum+2][colNum+1] + " " +  inputArr[rowNum+2][colNum+2]);
+	}
+
+}
