@@ -8,15 +8,16 @@ public class Average
 	public static void main(String[] args) 
 	{
 		Scanner sc = new Scanner(System.in);
+		
 		System.out.println("Enter no of decimals allowed = ");
 		int noOfDecimals = sc.nextInt();
 		
 		System.out.println("Enter number of subjects = ");
 		int noOfSubjects = sc.nextInt();
 		
+		//Getting all subject marks and storing in an float array
 		float[] marks = new float[noOfSubjects];
-
-		for(int i=0; i<noOfSubjects; i++)					//Getting all subject marks and storing in an float array
+		for(int i=0; i<noOfSubjects; i++)					
 		{
 		System.out.println("Enter Subject " + (i+1) + " mark = ");
 		String mark = sc.next();							//Getting mark as String Input so that decimal numbers can be extracted
@@ -26,7 +27,7 @@ public class Average
 			System.out.println("Enter marks with maximum of 2 decimals places");
 			i--;
 		}
-		else
+		else											//if number of decimals is equal to or less than the user input 
 			marks[i] = Float.parseFloat(mark);			//load the correctly entered marks in a float array
 		
 		//System.out.println(mark);
@@ -34,6 +35,7 @@ public class Average
 		}
 		//System.out.println(Arrays.toString(marks));
 		
+
 		System.out.println("Round off needed? Yes/No : ");
 		String roundOff = sc.next();
 		
@@ -46,24 +48,24 @@ public class Average
 		float roundedAvrWithDecimal;
 		if (roundOff.equals("No"))
 		{
-			if (	(  ( (int)(averageMarks*1000) )%10)  >  4  )
+			if (	(  ( (int)(averageMarks*1000) )%10)  >  4  )		//extracting 3rd decimal place - 1/1000th place to round off 2nd decimal place
 			{
-				roundedAvrWithDecimal = (float)(  (int)(averageMarks*100)+1  )/100  ; //12.45, 12.86
+				roundedAvrWithDecimal = (float)(  (int)(averageMarks*100)+1  )/100  ; //try input - 12.45, 12.86
 			}
 			else 
-				roundedAvrWithDecimal = (float)(  (int)(averageMarks*100)  )/100 ; //11.03, 11.26
+				roundedAvrWithDecimal = (float)(  (int)(averageMarks*100)  )/100 ; //try input - 23.45, 24.56 , 24.66
 			
-			System.out.println(roundedAvrWithDecimal);
+			System.out.println("Average is = " + roundedAvrWithDecimal);
 
 		}
 		if (roundOff.equals("Yes"))
 		{
-			if (	((int)(averageMarks*10)%10)  >  4  )
+			if (	((int)(averageMarks*10)%10)  >  4  )				//extracting 1st decimal place - 1/1000th place to round off as a whole number
 			{
-				System.out.println("Average 1 is = " + ((  (int)(averageMarks)  )+1)  ); //16.7, 20.8
+				System.out.println("Average is = " + ((  (int)(averageMarks)  )+1)  ); //try input - 16.7, 20.8
 			}
 			else 
-				System.out.println("Average 2 is = " + (int)(averageMarks)  ); //12.34, 12.45
+				System.out.println("Average is = " + (int)(averageMarks)  ); //try input - 12.34, 12.45
 		}
 
 	}
@@ -102,25 +104,6 @@ public class Average
 		
 	}
 	
-	static int roundOff(String str)
-	{
-		char[] chArr = str.toCharArray();
-		
-		boolean decimalFlag = false;
-		int deciDigits = 0;
-		for(int i=0; i<chArr.length; i++)
-		{
-			if (decimalFlag)
-			{
-				deciDigits = deciDigits*10 + Integer.parseInt(String.valueOf(chArr[i]));
-			}
-
-			if(chArr[i] == '.') 
-				{decimalFlag = true;}
-		}
-
-		return deciDigits;
-	}
 
 	/*
 	static int extractDecimalDigits(String str)
