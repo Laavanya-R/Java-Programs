@@ -1,0 +1,71 @@
+package myJavaPackageLessons;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class SortArray 
+{
+
+	public static void main(String[] args) 
+	{
+		int[] inputArray = getArrayInput();		
+		
+		sortArray(inputArray);
+	}
+	
+	
+	static void sortArray(int[] inputArray)
+	{
+		
+		for(int i=0; i<inputArray.length-1; i++)			//traverse from 1st element in the array
+		{	
+			int leastValue = inputArray[i];
+			int leastValuePosition = 0;
+			boolean isLeastValuePresent = false;
+			
+			
+			for(int j=i+1; j<inputArray.length; j++)		//compare with rest of the elements in the array for each i
+			{	
+				//isLeastValuePresent = false;
+				if(inputArray[j]<leastValue)				//find the least value in the remaining elements 
+				{
+					leastValue = inputArray[j];
+					leastValuePosition = j;
+					isLeastValuePresent = true;
+				}
+			}
+			if(isLeastValuePresent == true)					//do swap only if least element is present in the rest of the array
+			{
+			int temp = inputArray[i];						//swap the least value with i'th element
+			inputArray[i] = leastValue;
+			inputArray[leastValuePosition] = temp;
+			}
+			System.out.println("for loop " + Arrays.toString(inputArray));
+		}
+		
+		System.out.println("The sorted array is : " + Arrays.toString(inputArray));
+	}
+	
+	
+	static int[] getArrayInput()							//function to get input from console
+	{
+		Scanner sc = new Scanner(System.in);
+		System.out.println("How many array elements? ");
+		int noOfArrayElements = sc.nextInt();
+		
+		int[] inputArray = new int[noOfArrayElements];
+		int i = 0;
+
+		System.out.println("Enter the array elements");		
+		while(noOfArrayElements != 0)						//Get input from console noOfArrayElements times
+		{
+			inputArray[i] = sc.nextInt();
+			noOfArrayElements--;
+			i++;
+		}
+		sc.close();
+		
+		return inputArray;
+	}
+}
+
