@@ -40,7 +40,6 @@ public class SortArray
 			inputArray[i] = leastValue;
 			inputArray[leastValuePosition] = temp;
 			}
-			System.out.println("for loop " + Arrays.toString(inputArray));
 		}
 		
 		System.out.println("The sorted array is : " + Arrays.toString(inputArray));
