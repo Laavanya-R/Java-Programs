@@ -1,0 +1,59 @@
+package myJavaPackageLessons;
+
+import java.util.Scanner;
+
+public class AlphabetStarPattern 
+{
+
+	public static void main(String[] args) 
+	{
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Size of 2D array matrix : ");				//Get size of the 2D array matrix from console
+		int sizeOf2DArray = sc.nextInt();
+		sc.close();
+		
+		String[][] inputStringArray = load2DArrayIn_Z_Pattern(sizeOf2DArray); //call function to load the 2D array with Z format
+		print2DArray(inputStringArray);
+
+	}
+	
+	static String[][] load2DArrayIn_Z_Pattern(int sizeOf2DArray)
+	{
+	String[][] inputStringArray = new String[sizeOf2DArray][sizeOf2DArray];
+
+	for (int i = 0; i < inputStringArray.length; i++) 				//for every row
+	{
+		for (int j = 0; j < inputStringArray[i].length; j++) 		//for every column
+		{
+			if(i == 0 || i == inputStringArray[i].length-1)			//top row and bottom row for Z is *
+			{
+				inputStringArray[i][j] = "*";
+			}
+			else if((i+j) == sizeOf2DArray-1)						//the diagonal from top right to bottom left is *
+				{
+					inputStringArray[i][j] = "*";					//follows the pattern - sum of positions equal to array size -1
+				}
+			else
+			{
+				inputStringArray[i][j] = " ";						//rest of the places are filled with "" to avoid display of null
+			}
+		}
+	}
+	return inputStringArray;
+}
+	
+	// Printing a 2D array
+	static void print2DArray(String[][] inputArray)
+	{
+		for (int i = 0; i < inputArray.length; i++) 				//for every row
+		{
+			for (int j = 0; j < inputArray[i].length; j++) 		//for every column
+			{
+				System.out.print(inputArray[i][j] + " ");
+			}
+			System.out.println();
+		}
+	}
+
+
+}
