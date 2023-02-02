@@ -1,0 +1,55 @@
+package myJavaPackageLessons;
+
+import java.util.Scanner;
+import java.util.Arrays;
+public class ReverseArrayUsingSameArray 
+{
+
+	public static void main(String[] args) 
+	{
+		getReversedArray(getArrayInput());					//pass the input array to getReversedArray function
+	}
+	
+	static int[] getArrayInput()							//function to get input from console
+	{
+		Scanner sc = new Scanner(System.in);
+		System.out.println("How many array elements? ");
+		int noOfArrayElements = sc.nextInt();
+		
+		int[] inputArray = new int[noOfArrayElements];
+		int i = 0;
+
+		System.out.println("Enter the array elements");		
+		while(noOfArrayElements != 0)						//Get input from console noOfArrayElements times
+		{
+			inputArray[i] = sc.nextInt();
+			noOfArrayElements--;
+			i++;
+		}
+		sc.close();
+		
+		return inputArray;
+	}
+	
+	static void getReversedArray(int[] inputArray)							//function to reverse the elements in the given array
+	{
+		System.out.println("The input array is : " + Arrays.toString(inputArray));
+		
+		int firstPosition = 0;
+		int lastPosition = inputArray.length-1;
+		
+		for(int i=0; 	i<(inputArray.length)/2;		 i++)				//iterate only till mid of the array - for both odd and even length
+		{
+			//if(firstPosition == lastPosition  ||  firstPosition > lastPosition) break;		//break if the swap is mid way
+
+			int temp = inputArray[firstPosition];
+			inputArray[firstPosition] = inputArray[lastPosition];
+			inputArray[lastPosition] = temp;
+			
+			firstPosition++;
+			lastPosition--;
+		}
+		System.out.println("The reversed array is : " + Arrays.toString(inputArray));
+		
+	}
+}
