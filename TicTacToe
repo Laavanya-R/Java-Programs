@@ -1,0 +1,175 @@
+package myJavaPackageLessons;
+
+import java.util.Scanner;
+
+public class TicTacToe 
+{
+	static int totalMovesCompleted = 0;
+	//static Scanner sc = new Scanner(System.in);
+	
+	public static void main(String[] args) 
+	{
+		String[][] strArray = {{"1","2","3"},{"4","5","6"},{"7","8","9"}}; //loading position numbers in array
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("Tic Tac Toe board");		//show the board for the user to choose position
+		print2DArray(strArray);
+
+		while(totalMovesCompleted<9)					//let players to enter in all 9 positions
+		{
+			playerInput(strArray, "X", sc);				//store player 1 input in the position they chose
+			
+			if(totalMovesCompleted >= 5)				//possible match would be after 5 minimum moves for X
+				checkTicTacToeWinner(strArray);
+			
+			if(totalMovesCompleted == 9) break;			//no more input after all 9 positions are filled
+
+			playerInput(strArray, "O", sc);				//store player 2 input in the position they chose
+			
+			if(totalMovesCompleted >= 6)
+				checkTicTacToeWinner(strArray);			//possible match would be after 6 minimum moves for O
+
+		}
+		sc.close();
+	}
+	
+	static void playerInput(String[][] strArray, String xo, Scanner sc)
+	{
+		
+
+		String position;
+		
+		System.out.println("Player 1 - Choose the position to place " + xo + " : ");	
+		position = sc.next();
+		
+		for(int i = 0; i<3; i++)
+		{
+			for(int j = 0; j<3; j++)
+			{
+				if(strArray[i][j].equals(position) )
+					{
+						strArray[i][j]  = xo;
+						totalMovesCompleted++;
+					}
+			}
+		}
+		System.out.println("Tic Tac Toe board");	
+		print2DArray(strArray);
+		
+		
+	}
+	
+	static void checkTicTacToeWinner(String[][] strArray) //function to validate the given array for declaring winner
+	{	
+		//Check for matching XO in horizontal rows
+		for (int i = 0; i < 3; i++) 				//for every row
+		{
+			int player1count = 0;
+			int player2count = 0;
+			
+			for (int j = 0; j < 3; j++) 			//for every column
+			{
+				if(strArray[i][j] == "X")  player1count++;
+				if(strArray[i][j] == "O")  player2count++;
+			}
+			if(player1count == 3) 
+			{
+				System.out.println("Player1 is the Winner"); System.exit(0);
+			}
+			if(player2count == 3) 
+			{
+				System.out.println("Player2 is the Winner"); System.exit(0);
+			}
+		}
+		
+
+		
+		//Check for matching XO in vertical columns
+		{
+			for (int i = 0; i < 3; i++) 				//for every row
+			{
+				int player1count = 0;
+				int player2count = 0;
+
+				for (int j = 0; j < 3; j++) 			//for every column
+				{
+					if(strArray[j][i] == "X")  player1count++;
+					if(strArray[j][i] == "O")  player2count++;
+				}
+				if(player1count == 3) 
+				{
+					System.out.println("Player1 is the Winner"); System.exit(0);
+				}
+				if(player2count == 3) 
+				{
+					System.out.println("Player2 is the Winner"); System.exit(0);
+				}
+
+			}
+		}
+
+		
+		//Check for matching XO in top left to bottom right diagonal
+		{
+			int player1count = 0;
+			int player2count = 0;
+	
+			for (int i = 0; i < 3; i++) 				//for every row
+			{
+				for (int j = 0; j < 3; j++) 			//for every column
+				{
+					if(i==j  &&  strArray[i][j] == "X") player1count++;
+					if(i==j  &&  strArray[i][j] == "O") player2count++;
+				}
+			}
+			if(player1count == 3) 
+			{
+				System.out.println("Player1 is the Winner"); System.exit(0);
+			}
+			if(player2count == 3) 
+			{
+				System.out.println("Player2 is the Winner"); System.exit(0);
+			}
+		}
+
+		
+		
+		//Check for matching XO in top right to bottom left diagonal
+		{
+			int player1count = 0;
+			int player2count = 0;
+	
+			for (int i = 0; i < 3; i++) 				//for every row
+			{
+				for (int j = 0; j < 3; j++) 			//for every column
+				{
+					if( i+j == 2   &&  strArray[i][j] == "X") player1count++;
+					if( i+j == 2   &&  strArray[i][j] == "O") player2count++;
+				}
+			}
+			if(player1count == 3) 
+			{
+				System.out.println("Player1 is the Winner"); System.exit(0);
+			}
+			if(player2count == 3) 
+			{
+				System.out.println("Player2 is the Winner"); System.exit(0);
+			}
+		}
+
+		
+		
+	}
+
+	static void print2DArray(String[][] inputArray)
+	{
+		for (int i = 0; i < inputArray.length; i++) 			//for every row
+		{
+			for (int j = 0; j < inputArray[i].length; j++) 		//for every column
+			{
+				System.out.print(inputArray[i][j] + " ");
+			}
+			System.out.println();
+		}
+	}
+}
