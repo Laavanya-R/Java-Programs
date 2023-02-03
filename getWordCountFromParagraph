@@ -1,0 +1,117 @@
+package myJavaPackageLessons;
+
+import java.util.Scanner;
+import java.util.Arrays;
+public class RepeatedWordCountInParagraph 
+{
+	//static String[] inputParagraphInArray;
+	static String inputParagraph;
+	
+//I felt happy because I saw the others were happy and because I knew I should feel happy I was really happy
+	public static void main(String[] args) 
+	{
+		//System.out.println("The input string loaded in 2D array: ");
+		//print2DArray(getParagraphIn2DArray());
+		//String inputParagraph ;
+		String[] inputParagraphInArray = getParagraphIn1DArray();
+		
+		String[][] inputParagraphIn2DArray = getParagraphIn2DArray(inputParagraphInArray);
+		
+		getWordCountFromParagraph(inputParagraphIn2DArray, inputParagraphInArray, inputParagraph);
+
+	}
+	
+	static String[] getParagraphIn1DArray()
+	{
+		System.out.println("Type-in the paragraph here : ");
+		
+		Scanner sc = new Scanner(System.in);
+		inputParagraph = sc.nextLine();
+		
+		String[] inputParagraphInArray = inputParagraph.split(" "); 
+		System.out.println(Arrays.toString(inputParagraphInArray));
+		
+		sc.close();		
+		
+		return inputParagraphInArray;
+
+	}
+
+	static String[][] getParagraphIn2DArray(String[] inputParagraphInArray)							
+	{
+		
+		//create a 2D array for the size of the given string
+		int row = inputParagraphInArray.length/3;
+		int column = 4;
+		String[][] inputParagraphIn2DArray = new String[row][column];
+		
+		//load the 2D array with elements from 1D array
+		int k=0;
+			for(int i=0; i<row; i++)
+			{
+				for(int j=0; j<column; j++)
+				{
+					if(k<inputParagraphInArray.length)
+					inputParagraphIn2DArray[i][j] = inputParagraphInArray[k]; k++;
+				}
+			}
+		
+		return inputParagraphIn2DArray;
+	}
+	
+	static void getWordCountFromParagraph(String[][] inputParagraphIn2DArray, String[] inputParagraphInArray, String inputParagraph)
+	{
+	
+int wordPosition = 1;
+	for (String wordsInRow[] : inputParagraphIn2DArray) 			//for every row till last but one element
+	{
+		AllWords:
+		for (String word : wordsInRow) 
+			if(word != null)
+			{
+				int wordCount = 0;
+				for(int k=wordPosition-1; k>=1;k--) 
+				{
+					//System.out.println("wordPosition" + wordPosition);
+
+					
+					if ( word.equals(inputParagraphInArray[k-1])) 
+					{
+						//System.out.println("word  " + word);
+						//System.out.println("inputParagraphInArray[k-1]" + inputParagraphInArray[k-1]);
+
+						wordCount++;
+						if (wordCount>=1) continue AllWords;
+					} 
+				}
+				wordPosition++;
+
+					
+				int count = 0;	
+				for(int i = 0; i<inputParagraphIn2DArray.length; i++)
+				{
+						for(int j = 0; j<inputParagraphIn2DArray[i].length; j++)
+						{
+							if (  word.equals(inputParagraphIn2DArray[i][j]) )
+								count++;
+						}
+				}
+			System.out.println(word + ":" + count);
+			}
+	}
+	}
+	
+	static void print2DArray(String inputArray[][])
+	{
+		for (int i = 0; i < inputArray.length; i++) 				//for every row
+		{
+			for (int j = 0; j < inputArray[i].length; j++) 		//for every column
+			{
+				System.out.print(inputArray[i][j] + " ");
+			}
+			System.out.println();
+		}
+	}
+
+	
+}
