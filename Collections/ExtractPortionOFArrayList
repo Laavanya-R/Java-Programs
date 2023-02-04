@@ -1,0 +1,31 @@
+package myJavaPackageLessons;
+
+import java.util.ArrayList;
+
+public class ExtractPortionOFArrayList 
+{
+
+	public static void main(String[] args) 
+	{
+		ArrayList<Integer> numbersArrayList = new ArrayList<>();	//Declare an ArrayList
+		
+		int[] numbersInArray = {1,2, 3, 4, 5, 6, 7, 8, 9, 10};		//initialize and array with required data set
+		for(int i=0; i<numbersInArray.length; i++)					//loading the ArrayList with the data
+			numbersArrayList.add(numbersInArray[i]) ;
+		System.out.println(numbersArrayList);
+		
+		//extract a portion of ArrayList using subList method of ArrayList class
+		System.out.println(numbersArrayList.subList(1, 5));			//position 1 included, position 5 excluded
+
+		
+		//extract a portion of ArrayList using get() method of ArrayList class
+		int extractionStart = 1;				//start extraction position
+		int extractionEnd = 5;					//end extraction position
+		for(int i = extractionStart; i<=extractionEnd; i++)
+		{
+			System.out.print(numbersArrayList.get(i) + " ");
+		}
+		
+	}
+
+}
