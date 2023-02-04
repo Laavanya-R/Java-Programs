@@ -1,0 +1,30 @@
+package myJavaPackageLessons;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
+public class RankingArray 
+{
+	public static void main(String[] args) 
+	{
+		ArrayList<Integer> marksinArrayList = new ArrayList<>();	//Declare an ArrayList
+		
+		int[] marksInArray = {10, 8, 15, 12, 6, 20, 1};				//initialize and array with required marks set
+		for(int i=0; i<marksInArray.length; i++)					//loading the ArrayList with marks
+			marksinArrayList.add(marksInArray[i]) ;
+		System.out.println(marksinArrayList);
+		
+		for(int i=0; i<marksInArray.length; i++)		//for number of elements in the array, find max value and RANK it in reverse order
+		{
+			int maxMarkPosition = marksinArrayList.indexOf(Collections.max(marksinArrayList));
+			
+			marksInArray[maxMarkPosition] = marksInArray.length-i;
+			
+			marksinArrayList.set(maxMarkPosition, 0);	//set max value position to 0 so that it gets excluded in the next max function
+		}
+		System.out.println(Arrays.toString(marksInArray));
+
+	}
+
+}
