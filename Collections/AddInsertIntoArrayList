@@ -1,0 +1,59 @@
+package myJavaPackageLessons;
+import java.util.ArrayList;
+//import java.util.List;
+import java.util.LinkedList;
+public class InsertIntoArrayList 
+{
+
+	public static void main(String[] args) 
+	{
+		
+		//Adding elements to the end of an Array list
+		ArrayList<String> nameArrayList = new ArrayList<>();
+		nameArrayList.add("One");
+		nameArrayList.add("Two");
+		System.out.println(nameArrayList);
+		
+		nameArrayList.addAll(nameArrayList);		//adding an ArrayList to an ArrayList
+		System.out.println(nameArrayList);
+		
+		String name = "Watson";
+		nameArrayList.add(name);
+		System.out.println(nameArrayList);
+		
+		LinkedList<String> nameLinkedList = new LinkedList<>(); 	//adding a LinkedList to an ArrayList
+		nameLinkedList.add("aaa");
+		nameLinkedList.add("bbb");
+		nameArrayList.addAll(nameLinkedList);
+		System.out.println(nameArrayList);
+
+		ArrayList<Integer> numberArrayList = new ArrayList<>(); //adding an array to an Integer ArrayList
+		int[] numberArray = {1,2,3,4,5,6};
+		for(int i=0; i<numberArray.length; i++)
+			numberArrayList.add(numberArray[i]);
+		System.out.println(numberArrayList);
+
+		
+		//inserting elements in a particular position 
+		nameArrayList.add(2,"Three");
+		System.out.println(nameArrayList);
+		
+		nameArrayList.addAll(1, nameArrayList);		//inserting an ArrayList to an ArrayList
+		System.out.println(nameArrayList);
+		
+		nameArrayList.addAll(2, nameLinkedList);		//inserting a LinkedList to an ArrayList
+		System.out.println(nameArrayList);
+		
+		 //inserting an array into an Integer ArrayList
+		int[] numberArray2 = {7,8,9,10};
+		int j = 3;								//insert position
+		for(int i=0; i<numberArray2.length; i++)
+		{
+			numberArrayList.add(j, numberArray2[i]); 
+			j++;
+		}
+		System.out.println(numberArrayList);
+
+	}
+
+}
