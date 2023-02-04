@@ -1,0 +1,46 @@
+package myJavaPackageLessons;
+
+import java.util.Arrays;
+
+public class DynamicArray 
+{
+
+	public static void main(String[] args) 
+	{
+		String[] nameArrayOriginal = {"one", "two", "three"};
+		String[] nameArray2 = {"four", "five", "six", "seven", "eight"};
+		String[] nameArray3 = {"nine", "ten", "eleven", "twelve"};
+		
+		//change array size using copyOf method from Arrays class
+		System.out.println("Original Array : " + "\n" + Arrays.toString(nameArrayOriginal) + "\n");
+		
+		nameArrayOriginal = Arrays.copyOf(nameArray2, nameArray2.length); //copy array2 to original array
+		System.out.println("Original Array - after copyto from Array2 : " + "\n" + Arrays.toString(nameArrayOriginal) + "\n");
+		
+		nameArrayOriginal = Arrays.copyOf(nameArray2, nameArray2.length+nameArray3.length);
+		System.out.println("Original Array - after copyto from Array2 and extra length for Array3 : " + "\n" + Arrays.toString(nameArrayOriginal) + "\n");		//copy array2 content; increase length to array2+array3
+		
+		
+		for(int i=0; i<nameArray3.length; i++)
+			nameArrayOriginal[nameArray2.length+i] = nameArray3[i];
+		System.out.println("Original Array - after copyto from Array2 and elements added from Array3 : " + "\n" + Arrays.toString(nameArrayOriginal) + "\n");
+		
+		copyArrayMethod(nameArray2, nameArray3);
+	}
+
+	
+	static void copyArrayMethod(String[] nameArray2, String[] nameArray3)
+	{
+		//String[] nameArrayInsideMethod = {"four", "five", "six"};
+		String[] nameArrayNew = new String[(nameArray2.length + nameArray3.length)];
+
+		for(int i=0; i<nameArray2.length; i++)
+			nameArrayNew[i] = nameArray2[i];
+		for(int i=0; i<nameArray3.length; i++)
+			nameArrayNew[nameArray2.length+i] = nameArray3[i];
+		
+		System.out.println("New array with contents of 2 arrays appended : " + "\n" + Arrays.toString(nameArrayNew));
+	}
+	
+
+}
