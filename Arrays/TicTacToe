@@ -17,29 +17,31 @@ public class TicTacToe
 
 		while(totalMovesCompleted<9)					//let players to enter in all 9 positions
 		{
-			playerInput(strArray, "X", sc);				//store player 1 input in the position they chose
+			playerInput(strArray, "X", sc, "1");				//store player 1 input in the position they chose
 			
 			if(totalMovesCompleted >= 5)				//possible match would be after 5 minimum moves for X
 				checkTicTacToeWinner(strArray);
 			
 			if(totalMovesCompleted == 9) break;			//no more input after all 9 positions are filled
 
-			playerInput(strArray, "O", sc);				//store player 2 input in the position they chose
+			playerInput(strArray, "O", sc, "2");				//store player 2 input in the position they chose
 			
 			if(totalMovesCompleted >= 6)
 				checkTicTacToeWinner(strArray);			//possible match would be after 6 minimum moves for O
-
+			
 		}
+		if(totalMovesCompleted == 9) System.out.println("Game is a DRAW");
+
 		sc.close();
 	}
 	
-	static void playerInput(String[][] strArray, String xo, Scanner sc)
+	static void playerInput(String[][] strArray, String xo, Scanner sc, String playerNumber)
 	{
 		
 
 		String position;
 		
-		System.out.println("Player 1 - Choose the position to place " + xo + " : ");	
+		System.out.println("Player " + playerNumber + " - Choose the position to place " + xo + " : ");	
 		position = sc.next();
 		
 		for(int i = 0; i<3; i++)
