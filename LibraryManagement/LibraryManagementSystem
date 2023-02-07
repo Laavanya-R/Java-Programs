@@ -302,7 +302,7 @@ public class LibraryManagementSystem
 				int numberOfBooksForAuthor = booksAvailable.get(authorNameToTakeBook).size(); //get the size of the book arraylist for the author in booksAvailable
 			
 				if (numberOfBooksForAuthor>1)
-				{
+				{System.out.println("inside else>1");
 					System.out.println("Available books matching the given Author name : ");
 																			//authorNameBookNameInDB.get(authorNameToTakeBook) gives the book list for this author
 		            for(String bookName : booksAvailable.get(authorNameToTakeBook)) //For each book for that Author in DB. 
@@ -313,29 +313,7 @@ public class LibraryManagementSystem
 					bookNameToTakeBook = sc.nextLine();
 
 					
-					//check if book is available in booksAvailable for this author
-						boolean bookAvailable = false;
-						for(String bookName : booksAvailable.get(authorNameToTakeBook))
-						{
-							if(bookName.equals(bookNameToTakeBook)) 
-								bookAvailable = true;
-								break;
-						}
-						if(bookAvailable == false) 
-							{
-							System.out.println("The book is not available currently "); 
-							return;
-							}
-					
-
-					//check if the book is already taken for this author
-					if(booksTaken.containsKey(authorNameToTakeBook))
-						{for(String bookName : booksTaken.get(authorNameToTakeBook))
-							if(bookName.equals(bookNameToTakeBook))
-								System.out.println("The book is already taken and not available currently ");}
-					else
-					{
-						//add the book to booksTaken
+							//add the book to booksTaken
 			            List<String> tempBookNames = new ArrayList<>();
 			            
 			            if(booksTaken.containsKey(authorNameToTakeBook))//if booksTaken contains the author, add the book to the already available book list in arraylist
@@ -356,7 +334,6 @@ public class LibraryManagementSystem
 						{
 							booksAvailable.remove(authorNameToTakeBook);
 						}
-					}
 				}
 				else if (numberOfBooksForAuthor == 1)
 				{
@@ -388,8 +365,6 @@ public class LibraryManagementSystem
 						booksAvailable.remove(authorNameToTakeBook);
 					}
 				}
-				//else 
-					//System.out.println("This Book name is not available in our Database");
 			}
 			else
 				System.out.println("This Author name is not available to take currently");
