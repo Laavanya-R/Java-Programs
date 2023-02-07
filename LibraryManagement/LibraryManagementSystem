@@ -1,0 +1,588 @@
+package myJavaPackageLessons;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+//import java.util.Iterator;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Set;
+
+public class LibraryManagementSystem 
+{
+	static HashMap<String, List<String>> authorNameBookNameInDB = new HashMap<>();
+	static Scanner sc = new Scanner(System.in);
+	static HashMap<String, List<String>> booksTaken = new HashMap<>();
+	static HashMap<String, List<String>> booksAvailable = new HashMap<>();
+
+	public static void main(String[] args) 
+	{
+		System.out.println("Welcome to Zoho Public Library");
+		bookListDatabase();
+		
+		mainMenu();
+		
+		sc.close();	
+
+		//System.out.println(authorNameBookNameInDB);
+		//System.out.println(booksTaken);
+		//System.out.println(booksAvailable);
+		System.out.println("Thanks for using the Online Library Management System");
+
+	}
+	
+	static void mainMenu()
+	{
+		System.out.println("Login as :" + "\n" + "1. Librarian" + "\n" + "2. User");
+		int userType = sc.nextInt();
+
+			if(userType == 1)
+				librarianMenu();
+			else if(userType == 2)
+				userMenu();
+			else
+				System.out.println("Invalid input. Enter '1' for Librarian and '2' for User");
+	}
+	
+	static void librarianMenu()
+	{
+		System.out.println("What would you like to do?" + "\n" + "1. Add Book" + "\n" + "2. Delete Book");
+		int librarianAction = sc.nextInt();
+
+		if(librarianAction == 1)
+			addBook();
+		else if(librarianAction == 2)
+			deleteBook();
+		else
+			System.out.println("Invalid input. Enter '1' to Add Book and '2' to Delete Book");
+	}
+	
+	static void addBook()
+	{
+		System.out.println("How many books would you like to add?");
+		
+		int noOfBooksToAdd = sc.nextInt();
+		sc.nextLine();
+		
+		while(noOfBooksToAdd != 0)
+		{
+			System.out.println("Enter Author name of the book to be added : ");
+			String newAuthorName = sc.nextLine();
+			
+			System.out.println("Enter name of the book to be added : ");
+			String newBookName = sc.nextLine();
+			
+			if(authorNameBookNameInDB.containsKey(newAuthorName)) //if the Author is already present in the DB
+			{
+				BookMatched:
+				{
+		            for(String bookName : authorNameBookNameInDB.get(newAuthorName)) //For each book for the given Author
+		            {
+						if (bookName.equals(newBookName)) //if the new book name - author name mapping is already present in DB, do not update, exit the loop
+						{
+							System.out.println("This book is already present in our database");
+							break BookMatched;
+						}
+					               
+		            }
+		            
+		            //if the Author is already present in the DB, and the given book name is not present in his book list, add the book to his book list
+		            List<String> tempBookNamesToAdd = new ArrayList<>();					//create an arraylist to add the new book
+		            tempBookNamesToAdd.addAll(authorNameBookNameInDB.get(newAuthorName));
+		            tempBookNamesToAdd.add(newBookName);
+		            
+		            authorNameBookNameInDB.put(newAuthorName,tempBookNamesToAdd);
+					System.out.println("The new Book is successfully added for the Author");
+				}
+			}
+			else												//if the Author is not present in DB, add a new element in the HashMap
+			{
+				authorNameBookNameInDB.put(newAuthorName, Arrays.asList(newBookName)); //add author name as string and book name as arraylist
+				System.out.println("The new book is successfully added");
+			}
+			
+			noOfBooksToAdd--;
+		}
+		
+	}
+		
+	static void deleteBook()
+	{
+		System.out.println("Delete book by? " + "\n" + "1. By Author name" + "\n" + "2. By Book Name");
+		int deleteAction = sc.nextInt();
+		sc.nextLine();
+
+		if(deleteAction == 1)
+			deleteBookByAuthorName();
+		else if(deleteAction == 2)
+			deleteBookByBookName();
+		else
+			System.out.println("Invalid input. Enter '1' to delete a book By Author name and '2' to delete a book By Book name");
+	}
+	
+	static void deleteBookByAuthorName()
+	{
+		System.out.println("Enter the Author name to delete : ");
+		String authorNameToDelete = sc.nextLine();
+		String bookNameToDelete = "";
+		
+        int numberOfBooksForAuthor = authorNameBookNameInDB.get(authorNameToDelete).size();
+		
+		if(authorNameBookNameInDB.containsKey(authorNameToDelete)) //check if the book is present in DB
+		{
+			
+			//if more than one book is present for the given author, list the available book names for that author
+			//delete the chosen book name from the book list for the given author
+			if (numberOfBooksForAuthor>1)
+			{
+			
+				System.out.println("Available books matching the given Author name : ");
+																					//authorNameBookNameInDB.get(authorNameToDelete) gives the list
+	            for(String bookName : authorNameBookNameInDB.get(authorNameToDelete)) //For each book for that Author in DB. 
+	            {
+					System.out.println(bookName + " by " + authorNameToDelete);
+	            }
+				System.out.println("Enter the Book name to delete : ");		//get the author name
+				bookNameToDelete = sc.nextLine();
+				
+	            List<String> tempBookNames = new ArrayList<>();				//create an arraylist to remove the book from book list
+	            tempBookNames.addAll(authorNameBookNameInDB.get(authorNameToDelete));
+	            tempBookNames.remove(bookNameToDelete);
+	
+	            authorNameBookNameInDB.put(authorNameToDelete,tempBookNames);
+				System.out.println("The book by the chosen Author is successfully DELETED");
+			}
+			
+			//if only one book is present, remove that author from DB
+			else if(numberOfBooksForAuthor == 1)
+			{
+	            authorNameBookNameInDB.remove(authorNameToDelete);
+				System.out.println("The Author is successfully DELETED");
+			}
+
+		}
+		else
+			System.out.println("This Author name does not exist in our database");
+	}
+	
+	static void deleteBookByBookName()
+	{
+		System.out.println("Enter the Book name : ");
+		String bookNameToDelete = sc.nextLine();	
+		
+			int count = 0;
+			Set<String> setOfAuthorNamesCount = authorNameBookNameInDB.keySet(); 	// get keySet() of DB into a Set to iterate
+			for(String authorName : setOfAuthorNamesCount) 							// for each Author in DB
+			    for(String bookName : authorNameBookNameInDB.get(authorName))	 	//For each book for that Author
+			    	if(bookName.equals(bookNameToDelete))
+			    		count++;
+			
+			
+		//if more than one author is present for the given book name, list the available author names for that book
+		//delete the given book for the chosen author
+		if(count>1)
+		{
+			System.out.println("Available authors matching the given Book name :  ");
+			
+				Set<String> setOfAuthorNames = authorNameBookNameInDB.keySet(); // get keySet() of DB into a Set to iterate
+				for(String authorName : setOfAuthorNames) 					// for each Author in DB
+				{
+				    for(String bookName : authorNameBookNameInDB.get(authorName)) //For each book for that Author
+				    {
+				    	if(bookName.equals(bookNameToDelete))
+				    	{
+							System.out.println(bookName + " by " + authorName);		//list available authors for the book entered
+				    		
+				    	}
+				    		
+				    }
+				}
+				System.out.println("Enter the Author name to delete : ");			//choose from the listed author names
+				String authorNameToDelete = sc.nextLine();
+				
+	            List<String> tempBookNames = new ArrayList<>();                     //create an arraylist to delete the book from book list
+	            tempBookNames.addAll(authorNameBookNameInDB.get(authorNameToDelete));
+	            tempBookNames.remove(bookNameToDelete);
+	
+	            authorNameBookNameInDB.put(authorNameToDelete,tempBookNames);
+				System.out.println("The book by the chosen Author is successfully DELETED");
+				
+				if(authorNameBookNameInDB.get(authorNameToDelete).isEmpty()) //remove the whole entry of the last book is deleted
+				{
+					authorNameBookNameInDB.remove(authorNameToDelete);
+				}
+
+		}
+		//if only one book is present for the given book name, get the author name(key) and delete the book from the arraylist
+		else if(count == 1)
+		{
+			String tempAuthorName = "";
+			Set<String> setOfAuthorNamesToFindAuthorName = authorNameBookNameInDB.keySet(); 	// get keySet() of DB into a Set to iterate
+			
+			FindAuthorName:
+			for(String authorName : setOfAuthorNamesToFindAuthorName) 				// for each Author in DB
+			    for(String bookName : authorNameBookNameInDB.get(authorName))	  //For each book for that Author
+			    	if(bookName.equals(bookNameToDelete))
+			    		{tempAuthorName = authorName; break FindAuthorName;}		//get the author name
+
+		            List<String> tempBookNames1 = new ArrayList<>();			//create an arraylist to delete the book from book list
+		            tempBookNames1.addAll(authorNameBookNameInDB.get(tempAuthorName));
+		            tempBookNames1.remove(bookNameToDelete);
+		
+		            authorNameBookNameInDB.put(tempAuthorName,tempBookNames1);
+					System.out.println("The book by the chosen Author is successfully DELETED");
+					
+					//if this book is the last book for that author in DB and since it is deleted, remove the whole entry
+					if(authorNameBookNameInDB.get(tempAuthorName).isEmpty())
+					{
+						authorNameBookNameInDB.remove(tempAuthorName);
+					}
+		}
+		else if(count == 0)
+			System.out.println("This book name does not exist in our database");
+	}
+	
+	static void userMenu()
+	{
+		booksAvailable.putAll(authorNameBookNameInDB); 		//copying all the data from DB to available books
+		System.out.println("What would you like to do?" + "\n" + "1. Take Book" + "\n" + "2. Return Book");
+		int userAction = sc.nextInt();
+
+		if(userAction == 1)
+			takeBook();
+		else if(userAction == 2)
+			returnBook();
+		else
+			System.out.println("Invalid input. Enter '1' to Take Book and '2' to Return Book");
+	}
+	
+	static void takeBook()
+	{
+		System.out.println("Take book by? " + "\n" + "1. By Author name" + "\n" + "2. By Book Name");
+		
+		while(sc.hasNext())
+		{
+		int userTakeBookAction = sc.nextInt();
+		sc.nextLine();
+
+		if(userTakeBookAction == 1)
+			takeBookByAuthorName();
+		else if(userTakeBookAction == 2)
+			takeBookByBookName();
+		else
+		{
+			System.out.println("Invalid input. Enter '1' to TAKE a book By Author name and '2' to TAKE a book By Book name");
+			continue;
+		}
+		
+		System.out.println("Would you like to take more books? Y/N ");
+		String continueToTakeBook = sc.nextLine();
+		if(continueToTakeBook.equals("Y"))
+		{
+			System.out.println("Take book by? " + "\n" + "1. By Author name" + "\n" + "2. By Book Name");
+			continue;
+		}
+		else if(continueToTakeBook.equals("N"))
+			break;
+		}
+		
+	}
+	
+	static void takeBookByAuthorName()
+	{
+		System.out.println("Enter the Author name : ");
+		String authorNameToTakeBook = sc.nextLine();
+		String bookNameToTakeBook = "";
+		
+		
+		if(authorNameBookNameInDB.containsKey(authorNameToTakeBook))
+		{
+			if(booksAvailable.containsKey(authorNameToTakeBook))
+			{
+				int numberOfBooksForAuthor = booksAvailable.get(authorNameToTakeBook).size(); //get the size of the book arraylist for the author in booksAvailable
+			
+				if (numberOfBooksForAuthor>1)
+				{
+					System.out.println("Available books matching the given Author name : ");
+																			//authorNameBookNameInDB.get(authorNameToTakeBook) gives the book list for this author
+		            for(String bookName : booksAvailable.get(authorNameToTakeBook)) //For each book for that Author in DB. 
+		            {
+						System.out.println(bookName + " by " + authorNameToTakeBook);
+		            }
+					System.out.println("Enter the Book name to take : ");		//get the book name from user console
+					bookNameToTakeBook = sc.nextLine();
+
+					
+					//check if book is available in booksAvailable for this author
+						boolean bookAvailable = false;
+						for(String bookName : booksAvailable.get(authorNameToTakeBook))
+						{
+							if(bookName.equals(bookNameToTakeBook)) 
+								bookAvailable = true;
+								break;
+						}
+						if(bookAvailable == false) 
+							{
+							System.out.println("The book is not available currently "); 
+							return;
+							}
+					
+
+					//check if the book is already taken for this author
+					if(booksTaken.containsKey(authorNameToTakeBook))
+						{for(String bookName : booksTaken.get(authorNameToTakeBook))
+							if(bookName.equals(bookNameToTakeBook))
+								System.out.println("The book is already taken and not available currently ");}
+					else
+					{
+						//add the book to booksTaken
+			            List<String> tempBookNames = new ArrayList<>();
+			            
+			            if(booksTaken.containsKey(authorNameToTakeBook))//if booksTaken contains the author, add the book to the already available book list in arraylist
+			            	tempBookNames.addAll(booksTaken.get(authorNameToTakeBook));
+			            
+			            tempBookNames.add(bookNameToTakeBook);
+			            
+			            booksTaken.put(authorNameToTakeBook,tempBookNames);
+						System.out.println("The book by the chosen book by the Author is successfully TAKEN");
+						
+						//remove the book from booksAvailable
+			            List<String> tempBookNamesRemove = new ArrayList<>();
+			            tempBookNamesRemove.addAll(booksAvailable.get(authorNameToTakeBook));
+			            tempBookNamesRemove.remove(bookNameToTakeBook);						//books available will have null if the last book of the author is taken out
+		
+			            booksAvailable.put(authorNameToTakeBook,tempBookNamesRemove);
+						if(booksAvailable.get(authorNameToTakeBook).isEmpty()) //remove the whole entry of the last book is taken
+						{
+							booksAvailable.remove(authorNameToTakeBook);
+						}
+					}
+				}
+				else if (numberOfBooksForAuthor == 1)
+				{
+					//get the book name for the given author
+					List<String> listBookNames = booksAvailable.get(authorNameToTakeBook);
+					bookNameToTakeBook = listBookNames.get(0);
+	
+					//add the book to booksTaken
+		            List<String> tempBookNames = new ArrayList<>();
+		            
+		            if(booksTaken.containsKey(authorNameToTakeBook)) //if booksTaken contains the author, add the book to the already available book list in arraylist
+		            	tempBookNames.addAll(booksTaken.get(authorNameToTakeBook));
+		            
+		            tempBookNames.add(bookNameToTakeBook);
+	
+		            booksTaken.put(authorNameToTakeBook,tempBookNames);
+					System.out.println("The book is successfully TAKEN");
+					
+					
+					//remove the book from booksAvailable
+		            List<String> tempBookNamesRemove = new ArrayList<>();
+		            tempBookNamesRemove.addAll(booksAvailable.get(authorNameToTakeBook));
+		            tempBookNamesRemove.remove(bookNameToTakeBook);
+	
+		            booksAvailable.put(authorNameToTakeBook,tempBookNamesRemove);
+		            
+					if(booksAvailable.get(authorNameToTakeBook).isEmpty()) //remove the whole entry of the last book is taken
+					{
+						booksAvailable.remove(authorNameToTakeBook);
+					}
+				}
+				//else 
+					//System.out.println("This Book name is not available in our Database");
+			}
+			else
+				System.out.println("This Author name is not available to take currently");
+		}
+		else
+			System.out.println("This Author name does not exist in our database");
+			
+	}
+	static void takeBookByBookName()
+	{
+		System.out.println("Enter the Book name : ");
+		String bookNameToTakeBook = sc.nextLine();
+		//String authorNameToTakeBook = "";
+
+		int count = 0; 		//count how many book-author mapping is available for the given book name in booksAvailable
+		Set<String> setOfAuthorNamesCount = booksAvailable.keySet(); 	// get keySet() of DB into a Set to iterate
+		for(String authorName : setOfAuthorNamesCount) 							// for each Author in DB
+		    for(String bookName : booksAvailable.get(authorName))	 //For each book for that Author
+		    	if(bookName.equals(bookNameToTakeBook))
+		    		count++;
+		System.out.println(count);		
+				
+			//if more than one author is present for the given book name, list the available author names for that book
+			if(count>1)
+			{
+				System.out.println("Available authors matching the given Book name :  ");
+				
+				Set<String> setOfAuthorNames = booksAvailable.keySet(); // get keySet() of DB into a Set to iterate
+				for(String authorName : setOfAuthorNames) 					// for each Author in DB
+				{
+				    for(String bookName : booksAvailable.get(authorName)) //For each book for that Author
+				    {
+				    	if(bookName.equals(bookNameToTakeBook))
+				    	{
+							System.out.println(bookName + " by " + authorName);		//list available authors for the book entered
+				    		
+				    	}
+				    		
+				    }
+				}
+				System.out.println("Enter the Author name to Take book : ");
+				String authorNameToTakeBook = sc.nextLine();
+				
+				
+				//add the book to booksTaken
+	            List<String> tempBookNames = new ArrayList<>();
+	            
+	            if(booksTaken.containsKey(authorNameToTakeBook))//if booksTaken contains the author, add the book to the already available book list in arraylist
+	            	tempBookNames.addAll(booksTaken.get(authorNameToTakeBook));
+	            
+	            tempBookNames.add(bookNameToTakeBook);
+	            
+	            booksTaken.put(authorNameToTakeBook,tempBookNames);
+				System.out.println("The book by the chosen Author is successfully TAKEN");
+            	
+			
+				//remove the book from booksAvailable
+	            List<String> tempBookNamesRemove = new ArrayList<>();
+	            tempBookNamesRemove.addAll(booksAvailable.get(authorNameToTakeBook));
+	            tempBookNamesRemove.remove(bookNameToTakeBook);						//books available will have null if the last book of the author is taken out
+
+	            booksAvailable.put(authorNameToTakeBook,tempBookNamesRemove);
+				if(booksAvailable.get(authorNameToTakeBook).isEmpty()) //remove the whole entry of the last book is taken
+				{
+					booksAvailable.remove(authorNameToTakeBook);
+				}
+			}
+			else if(count ==1)
+			{
+				//Get the author name for the given Book name
+				String authorNameToTakeBook = "";
+				Set<String> setOfAuthorNamesToFindAuthorName = booksAvailable.keySet(); 	// get keySet() of DB into a Set to iterate
+				
+				FindAuthorName:
+				for(String authorName : setOfAuthorNamesToFindAuthorName) 				// for each Author in DB
+				    for(String bookName : booksAvailable.get(authorName))	  //For each book for that Author
+				    	if(bookName.equals(bookNameToTakeBook))
+				    		{authorNameToTakeBook = authorName; break FindAuthorName;}		//get the author name
+
+				
+
+				//add the book to booksTaken
+	            List<String> tempBookNames = new ArrayList<>();
+	            
+	            if(booksTaken.containsKey(authorNameToTakeBook)) //if booksTaken contains the author, add the book to the already available book list in arraylist
+	            	tempBookNames.addAll(booksTaken.get(authorNameToTakeBook));
+	            
+	            tempBookNames.add(bookNameToTakeBook);
+
+	            booksTaken.put(authorNameToTakeBook,tempBookNames);
+				System.out.println("The book is successfully TAKEN");
+				
+				
+				//remove the book from booksAvailable
+	            List<String> tempBookNamesRemove = new ArrayList<>();
+	            tempBookNamesRemove.addAll(booksAvailable.get(authorNameToTakeBook));
+	            tempBookNamesRemove.remove(bookNameToTakeBook);
+
+	            booksAvailable.put(authorNameToTakeBook,tempBookNamesRemove);
+	            
+				if(booksAvailable.get(authorNameToTakeBook).isEmpty()) //remove the whole entry of the last book is taken
+				{
+					booksAvailable.remove(authorNameToTakeBook);
+				}
+			}
+			else 
+				System.out.println("This book is not available to take currently");
+
+}
+
+	static void returnBook()
+	{
+		//for testing purpose
+		booksTaken.put("Author11", Arrays.asList("Book500", "Book600", "Book700"));
+		booksTaken.put("Author12", Arrays.asList("Book400", "Book200"));
+		booksTaken.put("Author13", Arrays.asList("Book300"));
+		booksTaken.put("Author14", Arrays.asList("Book100", "Book200"));
+
+		
+		
+		System.out.println("How many books would you like to return?");
+		
+		int noOfBooksToReturn = sc.nextInt();
+		sc.nextLine();
+		
+		while(noOfBooksToReturn != 0)
+		{
+			System.out.println("Enter Author name of the book to be returned : ");
+			String authorNameToReturn = sc.nextLine();
+			
+			if(booksTaken.containsKey(authorNameToReturn))
+			{			
+				System.out.println("Enter name of the book to be returned : ");
+				String bookNameToReturn = sc.nextLine();
+
+				
+				for(String bookName: booksTaken.get(authorNameToReturn))
+				{
+					if(bookName.equals(bookNameToReturn))
+					{
+			
+						//add the book to booksAvailable
+				        List<String> tempBookNames = new ArrayList<>();
+				        
+				           if(booksAvailable.containsKey(authorNameToReturn))//if booksAvailable contains the author, add the book to the already available book list in arraylist
+				        	   tempBookNames.addAll(booksAvailable.get(authorNameToReturn));
+				        tempBookNames.add(bookNameToReturn);						
+			
+				        booksAvailable.put(authorNameToReturn,tempBookNames);
+				        
+						//remove the book from booksTaken
+				        List<String> tempBookNamesToRemove = new ArrayList<>();
+				        tempBookNamesToRemove.addAll(booksTaken.get(authorNameToReturn));
+				        tempBookNamesToRemove.remove(bookNameToReturn);						//books available will have null if the last book of the author is taken out
+			
+				        booksTaken.put(authorNameToReturn,tempBookNamesToRemove);
+						if(booksTaken.get(authorNameToReturn).isEmpty()) //remove the whole entry of the last book is taken
+						{
+							booksTaken.remove(authorNameToReturn);
+						}
+
+				        System.out.println("The book is successfully RETURNED"); 
+				        break;
+						
+					}
+					else
+						System.out.println("The book is not present in our List. Please enter the correct Book Name");
+				}
+			}
+			else
+		        System.out.println("The book is not present in our List. Please enter the correct Author Name");
+			System.out.println(booksTaken);
+					System.out.println(booksAvailable);
+			noOfBooksToReturn--;
+		}
+
+		
+		
+	}
+	
+	static void bookListDatabase()
+	{
+		authorNameBookNameInDB.put("J.K.Rowling", Arrays.asList("Harry Potter"));
+		authorNameBookNameInDB.put("J.R.R.Tolkein", Arrays.asList("The Lord of the Rings"));
+		authorNameBookNameInDB.put("Robert Jordan", Arrays.asList("The Wheel of Time"));
+		authorNameBookNameInDB.put("Arthur Conan Doyle", Arrays.asList("Sherlock Holmes"));
+		authorNameBookNameInDB.put("Author1", Arrays.asList("Book1", "Book20", "Book30"));
+		authorNameBookNameInDB.put("Author2", Arrays.asList("Book2", "Book20"));
+		authorNameBookNameInDB.put("Author3", Arrays.asList("Book2"));
+		authorNameBookNameInDB.put("Author4", Arrays.asList("Book2"));
+	}
+
+}
+
+
+
