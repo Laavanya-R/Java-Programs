@@ -1,0 +1,48 @@
+package myJavaPackageLessons;
+
+
+public class PatternPrintingAssessment 
+{
+
+	public static void main(String[] args) 
+	{
+		char[][] charArray = new char[11][11];
+		char ch = 65;
+
+		for(int i=0; i<11; i++)
+			for(int j=0; j<11; j++)
+				charArray[i][j] = ' ';
+		
+		int m = 5; 
+		
+		for(int i=0; i<6; i++)
+		{
+				charArray[i][m] = ch; 
+				charArray[i+1][m+1] = (char) (ch+1);
+				charArray[i+2][m+2] = (char) (ch+2);
+				charArray[i+3][m+3] = (char) (ch+3);
+				charArray[i+4][m+4] = (char) (ch+4);
+				charArray[i+5][m+5] = (char) (ch+5);
+				m--;
+		
+		}
+		
+		int n=1;
+		for(int i=6; i<11; i++)
+		{
+				charArray[i][n] = ch; 
+				n++;
+		}
+
+		for(int i=0; i<11; i++)
+		{
+			for(int j=0; j<11; j++)
+				{
+				System.out.print(charArray[i][j]);
+		
+				}
+			System.out.println();
+		}
+		
+	}
+}
