@@ -1,0 +1,48 @@
+package myJavaPackageLessons;
+
+import java.util.*;
+
+public class AddToCollection 
+{
+
+	public static void main(String[] args) 
+	{
+		int a[] = {1,1,5,5,10,20,15,10};
+		ArrayList<Integer> intArrayList = new ArrayList<>();
+		
+		for(int i=0; i<a.length; i++)
+		{	intArrayList.add(a[i]); }
+		
+		
+		/*for(int i=0; i<a.length; i++)
+		{
+			System.out.print(intArrayList.get(i));
+		}*/
+
+		System.out.println("ArrayList - " + intArrayList);
+		
+		
+		//by adding all from another collection
+		HashSet<Integer> intHashSet2 = new HashSet<Integer>();
+		
+		intHashSet2.addAll(intArrayList);
+		System.out.println("HashSet - " + intHashSet2);
+		
+		//by adding elements one by one
+		HashSet<Integer> intHashSet = new HashSet<Integer>();
+
+		for(int i=0; i<a.length; i++)
+		{	intHashSet.add(a[i]); }
+		System.out.println("HashSet - " + intHashSet);
+
+		
+		LinkedHashSet<Integer> intLinkedHashSet = new LinkedHashSet<>();
+		intLinkedHashSet.add(a[0]);
+		
+		for(int i=0; i<a.length; i++)
+		{	intLinkedHashSet.add(a[i]); }
+		System.out.println("LinkedHashSet - " + intLinkedHashSet);
+	
+	}
+
+}
