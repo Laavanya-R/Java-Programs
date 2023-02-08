@@ -1,0 +1,26 @@
+package myJavaPackageLessons;
+
+import java.util.Arrays;
+
+public class printArrayEvenOdd 
+{
+
+	public static void main(String[] args) 
+	{
+		int[] numbers = {2, 0, 1, 0, 4, 0};
+		int[] numbersTemp = new int[numbers.length];
+		
+		int j=0;
+		for(int i=0; i<numbers.length; i++)
+			if(i%2 == 0) //even positions
+				{numbersTemp[j] = numbers[i]; j++;}
+
+		for(int i=0; i<numbers.length; i++)
+			if(i%2 == 1) //odd positions
+				{numbersTemp[j] = numbers[i]; j++;}
+				
+			
+		System.out.println(Arrays.toString(numbersTemp));
+	}
+
+}
