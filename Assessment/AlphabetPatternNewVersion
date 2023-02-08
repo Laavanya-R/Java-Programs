@@ -1,0 +1,71 @@
+package myJavaPackageLessons;
+
+
+public class PatternPrintingAssessment 
+{
+
+	public static void main(String[] args) 
+	{
+		char[][] charArray = new char[11][11];
+		char ch = 65;
+
+		for(int i=0; i<11; i++)
+			for(int j=0; j<11; j++)
+				charArray[i][j] = ' ';
+		
+
+	/*	for(int m=0; m<6; m++)  	//for every diagonal row /
+		{
+			for(int i=m, j=5+m;    i<6+m;     i++, j--)
+				charArray[i][j] = ch; 
+			ch++;
+		}
+*/
+
+		int col = 0;
+		int maxCol = 11;
+		
+		for(int i=5; i>=0; i--) // 1 to 6 rows
+		{
+			for(int j=col; j<maxCol;  )  //for each column start and end changing for every i loop
+			{
+				charArray[i][j] = ch;
+				j=j+2;
+				ch++;
+			}
+			
+			ch = 65;	
+			col++;
+			maxCol = maxCol-1;
+		}
+
+		col = 1;
+		maxCol = 11;
+		
+		for(int i=6; i<=10; i++) // 7 to 11 rows
+		{
+			for(int j=col; j<maxCol;  )  //for each column start and end changing for every i loop
+			{
+				charArray[i][j] = ch;
+				j=j+2;
+				ch++;
+			}
+			
+			ch = 65;	
+			col++;
+			maxCol = maxCol-1;
+		}
+		
+		
+		
+		for(int i=0; i<11; i++)
+		{
+			for(int j=0; j<11; j++)
+				{
+				System.out.print(charArray[i][j]);
+				}
+			System.out.println();
+		}
+		
+	}
+}
