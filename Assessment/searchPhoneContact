@@ -3,7 +3,9 @@ package myJavaPackageLessons;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 public class searchPhoneContact {
 
@@ -45,7 +47,7 @@ public class searchPhoneContact {
 			phoneNo = sc.nextLine();
 			
 			System.out.println("Contact names matching the entered number : ");
-			for(String str: contactName.keySet())
+			/*for(String str: contactName.keySet())
 			{
 				for(String number: contactName.get(str))
 				{
@@ -53,6 +55,26 @@ public class searchPhoneContact {
 						System.out.println(str + ":" + contactName.get(str));
 				}
 			}
+			*/
+			
+		//	for (Map.Entry<String,List<String>> entry : contactName.entrySet()) 
+	     //       System.out.println("Name = " + entry.getKey() + " Phone Number = " + entry.getValue());
+			
+			
+			Set<String> contactNamesPh = contactName.keySet(); // get keySet() of DB into a Set to iterate
+			for(String contactNameInSet : contactNamesPh) 					// for each Author in DB
+			{
+			    for(String phNoInSet : contactName.get(contactNameInSet)) //For each book for that Author
+			    {
+			    	if(phNoInSet.contains(phoneNo))
+			    	{
+						System.out.println(contactNameInSet + " - " + phoneNo);		//list available authors for the book entered
+			    		
+			    	}
+			    		
+			    }
+			}
+
 		}
 	
 	}
