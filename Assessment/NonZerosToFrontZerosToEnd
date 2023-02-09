@@ -1,0 +1,28 @@
+package myJavaPackageLessons;
+
+import java.util.Arrays;
+
+public class NonZerosToFrontZerosToEnd 
+{
+
+	public static void main(String[] args) 
+	{
+		int[] numbers = {2, 0, 1, 0, 4, 0,7,0,0,0,9};
+
+		ifor:
+		for(int i=0; i<numbers.length; i++)
+		{
+			if(numbers[i] == 0)
+				for(int j=i+1; j<numbers.length; j++)
+					if(numbers[j] != 0)
+					{
+						int temp = numbers[i];
+						numbers[i] = numbers[j];
+						numbers[j] = temp; 	
+						continue ifor;
+					}
+		}
+		System.out.println(Arrays.toString(numbers));	
+	}
+
+}
