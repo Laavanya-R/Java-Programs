@@ -1,0 +1,36 @@
+package myJavaPackageLessons;
+
+import java.util.LinkedList;
+import java.util.Scanner;
+
+public class SwapTwoElementsInLinkedList {
+
+	public static void main(String[] args) 
+	{
+		LinkedList<Integer> intLinkedList = new LinkedList<Integer>();
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter the number of inputs for Linked List : ");
+		int numberOfElements = sc.nextInt();
+		System.out.println("Enter the number Elements for Liked List : ");
+		
+		while(numberOfElements!=0)
+		{
+		intLinkedList.add(sc.nextInt());
+		numberOfElements--;
+		}
+		sc.close();
+	
+		System.out.println("Linked List before swapping : " + intLinkedList);
+		
+		System.out.println("Which positions to swap? enter the 2 position numbers with space in between : ");
+		int firstPosition = sc.nextInt() - 1;		//since for user, the positions shown in list starts from 1
+		int secondPosition = sc.nextInt() - 1;
+		
+		int temp = intLinkedList.get(firstPosition);
+		intLinkedList.set(firstPosition, intLinkedList.get(secondPosition));
+		intLinkedList.set(secondPosition, temp);
+		
+		System.out.println("Linked List after swapping : " + intLinkedList);
+	}
+
+}
