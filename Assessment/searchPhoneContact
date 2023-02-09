@@ -3,80 +3,52 @@ package myJavaPackageLessons;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-public class searchPhoneContact {
+public class SearchPhoneNameNumber
+{
+	static HashMap<String, List<String>> contactName = new HashMap<String, List<String>>();
 
 	public static void main(String[] args) 
 	{
-		HashMap<String, List<String>> contactName = new HashMap<String, List<String>>();
-		contactName.put("aaa", Arrays.asList("999999999", "888888888"));
-		contactName.put("aaabb", Arrays.asList("999999991", "888888881"));
-		contactName.put("bbb", Arrays.asList("999999992", "888888882"));
-		contactName.put("cccaaa", Arrays.asList("999999993", "888888883"));
+		phoneDatabase();
 		
-		
-		System.out.println("Search by Name or Number? Enter 1 for Name or 2 for Number ");
-		
-		
+		System.out.println("Enter Name/Number ");
 		Scanner sc = new Scanner(System.in);
-		int choice = sc.nextInt();
-		sc.nextLine();
-		String phoneNo;
-		String name = "";
+		String inputNameNumberCaseSesitive = sc.nextLine();
+		String inputNameNumber = inputNameNumberCaseSesitive.toLowerCase();
+		sc.close();
+		boolean contactPresent = false;
 		
-		if(choice == 1)
-		{
-			System.out.println("Enter Contact Name : ");
-			name = sc.nextLine();
-			System.out.println("Contact names matching the entered name : ");
-			for(String str: contactName.keySet())
-			{
-				if(str.contains(name))
-					System.out.println(str + ":" + contactName.get(str));
-			}
-		
-		}
-		else if(choice == 2)
-		{
-			System.out.println("Enter Phone Number : ");
-			
-		
-			phoneNo = sc.nextLine();
-			
-			System.out.println("Contact names matching the entered number : ");
-			/*for(String str: contactName.keySet())
-			{
-				for(String number: contactName.get(str))
-				{
-					if(number.contains(phoneNo))
-						System.out.println(str + ":" + contactName.get(str));
-				}
-			}
-			*/
-			
-		//	for (Map.Entry<String,List<String>> entry : contactName.entrySet()) 
-	     //       System.out.println("Name = " + entry.getKey() + " Phone Number = " + entry.getValue());
-			
-			
-			Set<String> contactNamesPh = contactName.keySet(); // get keySet() of DB into a Set to iterate
-			for(String contactNameInSet : contactNamesPh) 					// for each Author in DB
-			{
-			    for(String phNoInSet : contactName.get(contactNameInSet)) //For each book for that Author
-			    {
-			    	if(phNoInSet.contains(phoneNo))
-			    	{
-						System.out.println(contactNameInSet + " - " + phoneNo);		//list available authors for the book entered
-			    		
-			    	}
-			    		
-			    }
-			}
+		System.out.println("Contacts matching the given input : ");
 
+		Set<String> contactNamesPh = contactName.keySet(); 			// get keySet() of DB into a Set to iterate
+		for(String contactNameInSet : contactNamesPh) 				// for each contact name in DB
+		{
+		    for(String phNoInSet : contactName.get(contactNameInSet)) //For each phone number for that contact name
+		    {
+		    	if(phNoInSet.contains(inputNameNumber) || contactNameInSet.contains(inputNameNumber))
+		    	{
+					System.out.println(contactNameInSet + " - " + phNoInSet);		//list available contacts for the string entered
+					contactPresent = true;
+		    	}
+		    }
 		}
+		if(contactPresent == false)    	System.out.println("No such contact present");
+	}
 	
+	
+	static void phoneDatabase()
+	{	
+	contactName.put("aaa", Arrays.asList("999999999", "888888888"));
+	contactName.put("aaabb", Arrays.asList("999999991", "888888881"));
+	contactName.put("bbb", Arrays.asList("999999992", "888888882"));
+	contactName.put("cccaaa", Arrays.asList("999999993", "888888883"));
+	contactName.put("ddd", Arrays.asList("999999999", "888888888"));
+	contactName.put("eeebbbaaa888", Arrays.asList("999999991"));
+	contactName.put("fff999", Arrays.asList("999999992", "888888882"));
+	contactName.put("cccaaa92", Arrays.asList("999999993", "888888883"));		
 	}
 
 }
