@@ -1,0 +1,64 @@
+package myJavaPackageLessons;
+
+import java.util.LinkedList;
+import java.util.Scanner;
+
+public class RotateLinkedList {
+
+	public static void main(String[] args) {
+		
+		LinkedList<Integer> intLinkedList = new LinkedList<Integer>();
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter the number of inputs for Linked List : ");
+		int numberOfElements = sc.nextInt();
+		System.out.println("Enter the number Elements for Linked List : ");
+		
+		while(numberOfElements!=0)
+		{
+		intLinkedList.add(sc.nextInt());
+		numberOfElements--;
+		}
+	
+		System.out.println("Linked List - Input Elements in the order of input : " + intLinkedList);
+		
+		System.out.println("Enter number of times to shift : ");
+		int noOfShift = sc.nextInt();
+		
+		System.out.println("Enter direction of shift - Left/Right: ");
+		String shiftDirection = sc.next();
+		
+		if(shiftDirection.equals("Left"))
+			leftShift(noOfShift, intLinkedList);
+		if(shiftDirection.equals("Right"))
+			rightShift(noOfShift, intLinkedList);
+		
+		sc.close();
+	}
+	
+	static void leftShift(int noOfShift, LinkedList<Integer> intLinkedList) 
+	{
+		for(int i = 0; i<noOfShift; i++) //number of times to shift
+		{
+			int temp = intLinkedList.get(i);
+			for(int j = 0; j<intLinkedList.size()-1; j++) //number of elements
+				intLinkedList.set(j, intLinkedList.get(j+1));
+			intLinkedList.set(intLinkedList.size()-1, temp);
+		}
+		System.out.println("Linked List after rotating "  + noOfShift + " times to left : " + intLinkedList);
+		
+	}
+	static void rightShift(int noOfShift, LinkedList<Integer> intLinkedList) 
+	{
+		int size = intLinkedList.size();
+		for(int i = 0; i<noOfShift; i++) //number of times to shift
+		{
+			int temp = intLinkedList.get(size-1);
+			for(int j = 0; j<size-1; j++) //number of elements
+				intLinkedList.set(size-j-1, intLinkedList.get(size-j-2));
+			intLinkedList.set(0, temp);
+		}
+		System.out.println("Linked List after rotating "  + noOfShift + " times to right : " + intLinkedList);
+		
+	}
+
+}
