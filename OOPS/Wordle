@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -36,17 +35,16 @@ public static void main(String[] args)
     int index = randomChoice.nextInt(wl.getWordList().size());
     //String correctWord = wl.getWordList().get(index).word.toLowerCase(); //directly accessing word field
     String correctWord = wl.getWordList().get(index).getWord().toLowerCase(); //accessing word field using get method
-    //System.out.println(correctWord);
-
 
     for(int i = 1; i<= 6; i++) {
         System.out.print("Guess " + i + " : ");
-        Word guessWord = new Word(sc.next().toLowerCase());
+        Word guessWord = new Word(sc.nextLine().toLowerCase());
 
-        if(guessWord.wordLength != 5) {
-            System.out.println("Enter a 5 letter word"); i--;
+        if (guessWord.wordLength != 5 || guessWord.getWord() == null || guessWord.getWord().equals("") || !guessWord.getWord().matches("^[a-zA-Z]*$"))
+        {
+            System.out.println("Enter a valid 5 letter word - of only alphabets with no spaces"); i--;
         }
-        else if(checkMatching(correctWord, guessWord.word)) break;
+        else if (checkMatching(correctWord, guessWord.word)) break;
 
         if(i==6)
         {
