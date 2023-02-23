@@ -1,0 +1,34 @@
+import java.util.Scanner;
+
+public class Paragraph {
+    public static void main(String[] arg) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the Paragraph : ");
+
+        String paragraph = sc.nextLine();
+
+        String[] paragraphInStringArray = paragraph.split(" ");
+
+        System.out.println("Output Paragraph : ");
+        System.out.print(paragraphInStringArray[0] + " ");
+
+        for(int i = 1; i< paragraphInStringArray.length-1; i++)
+            for(int j = i; j< paragraphInStringArray.length; j++){
+
+                int previousWordLength = paragraphInStringArray[i-1].length();
+
+                if (Character.toLowerCase(paragraphInStringArray[i-1].charAt(previousWordLength-1)) == Character.toLowerCase(paragraphInStringArray[j].charAt(0)))
+                {
+                    System.out.print(paragraphInStringArray[j] + " ");
+                    break;
+                }
+                else
+                    System.out.println(paragraphInStringArray[i] + " ");
+        }
+
+/*
+
+ */
+
+    }
+}
