@@ -1,0 +1,41 @@
+import java.util.Collections;
+import java.util.Map;
+import java.util.TreeMap;
+
+public class OverlappingIntervals {
+    public static void main(String[] arg) {
+
+        TreeMap<Integer, Integer> intervals = new TreeMap<>(Collections.reverseOrder());
+        intervals.put(1, 3);
+        intervals.put(5, 10);
+        intervals.put(4, 10);
+        intervals.put(13, 18);
+        intervals.put(12, 19);
+        intervals.put(20, 25);
+        TreeMap<Integer, Integer> intervalsWithoutOverlap = new TreeMap<>();
+
+        for (Map.Entry<Integer, Integer> entry : intervals.entrySet()) {
+            Integer intervalStart = entry.getKey();
+            Integer intervalEnd = entry.getValue();
+
+            Integer inclusiveStart = intervalStart;
+            Integer inclusiveEnd = intervalEnd;
+
+            if(!intervalsWithoutOverlap.containsKey(intervalStart)) {
+
+                for (Map.Entry<Integer, Integer> entry1 : intervals.entrySet()) {
+                    Integer intervalStart1 = entry1.getKey();
+                    Integer intervalEnd1 = entry1.getValue();
+
+                    if (intervalStart1 <= intervalStart && intervalEnd1 >= intervalEnd) {
+                        inclusiveStart = intervalStart1;
+                        inclusiveEnd = intervalEnd1;
+                    }
+                 }
+                intervalsWithoutOverlap.put(inclusiveStart, inclusiveEnd);
+            }
+        }
+        System.out.println(intervalsWithoutOverlap);
+    }
+
+}
