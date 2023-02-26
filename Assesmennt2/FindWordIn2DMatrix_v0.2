@@ -29,47 +29,28 @@ public class FindWordIn2DMatrix {
         int noOfRows = charArray.length;
         int noOfColumns = charArray[0].length;
 
-        int counter = 0;
+        int counterLeftToRight, counterTopToBottom, counterTopLeftToBottomRight, counterTopRightToBottomRight;
+
         for(int i = 0; i<noOfRows; i++) {
-            counter = 0;
+            counterLeftToRight = 0;
+            counterTopToBottom = 0;
+            counterTopLeftToBottomRight = 0;
+            counterTopRightToBottomRight = 0;
             for (int j = 0; j < noOfColumns; j++) {
                 if (Character.toLowerCase(wordInCharArray[j]) == Character.toLowerCase(charArray[i][j]))
-                    counter++;
-            }
-
-            if (counter == charArray.length)
-                return true;
-        }
-
-        for(int i = 0; i<noOfRows; i++) {
-            counter = 0;
-            for (int j = 0; j < noOfColumns; j++) {
+                    counterLeftToRight++;
                 if (Character.toLowerCase(wordInCharArray[j]) == Character.toLowerCase(charArray[j][i]))
-                    counter++;
-            }
-            if (counter == charArray.length)
-                return true;
-        }
-
-        for(int i = 0; i<noOfRows; i++) {
-            counter = 0;
-            for (int j = 0; j < noOfColumns; j++) {
+                    counterTopToBottom++;
                 if(i==j)
-                if (Character.toLowerCase(wordInCharArray[j]) == Character.toLowerCase(charArray[j][i]))
-                    counter++;
-            }
-            if (counter == charArray.length)
-                return true;
-        }
-
-        for(int i = 0; i<noOfRows; i++) {
-            counter = 0;
-            for (int j = 0; j < noOfColumns; j++) {
+                    if (Character.toLowerCase(wordInCharArray[j]) == Character.toLowerCase(charArray[j][i]))
+                        counterTopLeftToBottomRight++;
                 if(i+j == charArray.length)
                     if (Character.toLowerCase(wordInCharArray[j]) == Character.toLowerCase(charArray[j][i]))
-                        counter++;
+                        counterTopRightToBottomRight++;
             }
-            if (counter == charArray.length)
+
+            if (counterLeftToRight == charArray.length || counterTopToBottom == charArray.length
+                    || counterTopLeftToBottomRight == charArray.length || counterTopRightToBottomRight == charArray.length)
                 return true;
         }
         return false;
