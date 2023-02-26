@@ -1,0 +1,77 @@
+import java.util.Scanner;
+
+public class FindWordIn2DMatrix {
+    public static void main(String[] arg) {
+        Scanner sc = new Scanner(System.in);
+        String userChoice;
+        char[][] charArray =
+                {{'F', 'A', 'C', 'I'},
+                {'O', 'B', 'Q', 'P'},
+                {'A', 'N', 'O', 'B'},
+                {'M', 'A', 'S', 'S'} };
+
+        do {
+
+            System.out.print("Enter the word to be searched : ");
+            String searchWord = sc.next();
+            if (isWordPresentIn2DArray(charArray, searchWord))
+                System.out.println("The word '" + searchWord + "' is present in the 2D array");
+            else
+                System.out.println("The word '" + searchWord + "' is NOT present in the 2D array");
+
+            System.out.print("Do you like to search more? Enter Y : ");
+            userChoice = sc.next();
+        }while(userChoice.equalsIgnoreCase("y"));
+        System.out.print("Thank You");
+        }
+    static boolean isWordPresentIn2DArray(char[][] charArray, String searchWord){
+        char[] wordInCharArray = searchWord.toCharArray();
+        int noOfRows = charArray.length;
+        int noOfColumns = charArray[0].length;
+
+        int counter = 0;
+        for(int i = 0; i<noOfRows; i++) {
+            counter = 0;
+            for (int j = 0; j < noOfColumns; j++) {
+                if (Character.toLowerCase(wordInCharArray[j]) == Character.toLowerCase(charArray[i][j]))
+                    counter++;
+            }
+
+            if (counter == charArray.length)
+                return true;
+        }
+
+        for(int i = 0; i<noOfRows; i++) {
+            counter = 0;
+            for (int j = 0; j < noOfColumns; j++) {
+                if (Character.toLowerCase(wordInCharArray[j]) == Character.toLowerCase(charArray[j][i]))
+                    counter++;
+            }
+            if (counter == charArray.length)
+                return true;
+        }
+
+        for(int i = 0; i<noOfRows; i++) {
+            counter = 0;
+            for (int j = 0; j < noOfColumns; j++) {
+                if(i==j)
+                if (Character.toLowerCase(wordInCharArray[j]) == Character.toLowerCase(charArray[j][i]))
+                    counter++;
+            }
+            if (counter == charArray.length)
+                return true;
+        }
+
+        for(int i = 0; i<noOfRows; i++) {
+            counter = 0;
+            for (int j = 0; j < noOfColumns; j++) {
+                if(i+j == charArray.length)
+                    if (Character.toLowerCase(wordInCharArray[j]) == Character.toLowerCase(charArray[j][i]))
+                        counter++;
+            }
+            if (counter == charArray.length)
+                return true;
+        }
+        return false;
+    }
+}
