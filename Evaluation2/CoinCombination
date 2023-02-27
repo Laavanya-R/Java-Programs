@@ -1,0 +1,33 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class CoinCombination {
+    static Scanner sc = new Scanner(System.in);
+    public static void main(String[] arg){
+
+        System.out.print("Enter total number of available denominations : ");
+        int noOfAvailableDenominations  = sc.nextInt();
+        int[] coinDenominations = new int[noOfAvailableDenominations];
+
+
+        System.out.println("Enter the available denominations : ");
+        for(int i = 0; i < noOfAvailableDenominations ; i++)
+        {
+            System.out.print("Enter denomination " + (i+1) + " : ");
+            coinDenominations[i] = sc.nextInt();
+        }
+
+        System.out.print("Enter amount requiring change : ");
+        int amountRequiringChange  = sc.nextInt();
+
+        Arrays.sort(coinDenominations);
+        System.out.println(Arrays.toString(coinDenominations));
+
+        System.out.println("No of ways to make change : ");
+
+
+
+        sc.close();
+
+    }
+}
