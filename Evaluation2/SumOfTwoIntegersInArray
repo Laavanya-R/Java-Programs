@@ -1,0 +1,55 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class SumOfTwoIntegersInArray {
+    static Scanner sc = new Scanner(System.in);
+    public static void main(String[] arg){
+        int[] inputArray = getArrayInput();
+
+        //System.out.println(Arrays.toString(inputArray));
+
+        System.out.print("Enter Target Sum : ");
+        int targetSum = sc.nextInt();
+        if(!findAndPrintTwoIntegersSummingToTargetSum(inputArray, targetSum))
+            System.out.print("NO 2 integers sum up to " + targetSum);
+
+    sc.close();
+    }
+
+    static boolean findAndPrintTwoIntegersSummingToTargetSum(int[] inputArray, int targetSum){
+
+        int sum = 0;
+        boolean sumPresent = false;
+
+        for(int i=0; i<inputArray.length-1; i++)
+        {
+            for(int j=i+1; j<inputArray.length; j++)
+            {
+                if(inputArray[i] + inputArray[j] == targetSum) {
+                    sumPresent = true;
+                    System.out.println(inputArray[i] + " + " + inputArray[j] + " = " + targetSum);
+                }
+            }
+
+        }
+
+        if(sumPresent) return true;
+        else return false;
+
+    }
+
+    static int[] getArrayInput(){
+
+        System.out.print("Enter total number of integers to be entered : ");
+        int noOfIntegersInput = sc.nextInt();
+        int[] inputArray = new int[noOfIntegersInput];
+
+        System.out.println("Enter integers one by one : ");
+        for(int i = 0; i < noOfIntegersInput ; i++)
+        {
+            System.out.print("Enter number " + (i+1) + " : ");
+            inputArray[i] = sc.nextInt();
+        }
+        return inputArray;
+    }
+}
