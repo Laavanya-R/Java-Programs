@@ -1,0 +1,92 @@
+import java.util.Scanner;
+
+public class FindWordIn2DMatrix {
+    public static void main(String[] arg) {
+        Scanner sc = new Scanner(System.in);
+        String userChoice;
+        char[][] charArray =
+                {{'F', 'A', 'C', 'I'},
+                {'O', 'B', 'Q', 'P'},
+                {'A', 'N', 'O', 'B'},
+                {'M', 'A', 'S', 'S'} };
+
+        do {
+
+            System.out.print("Enter the word to be searched : ");
+            String searchWord = sc.next();
+            if (isWordPresentIn2DArray(charArray, searchWord))
+                System.out.println("The word '" + searchWord + "' is present in the 2D array");
+            else
+                System.out.println("The word '" + searchWord + "' is NOT present in the 2D array");
+
+            System.out.print("Do you like to search more? Enter Y : ");
+            userChoice = sc.next();
+        }while(userChoice.equalsIgnoreCase("y"));
+        System.out.print("Thank You");
+        }
+
+    static boolean isWordPresentIn2DArray(char[][] charArray, String searchWord){
+
+        int noOfRows = charArray.length;
+        int noOfColumns = charArray[0].length;
+
+        StringBuilder columnWord = new StringBuilder(" ");
+        StringBuilder leftDiagonalWord = new StringBuilder(" ");
+        StringBuilder rightDiagonalWord = new StringBuilder(" ");
+
+        for(int i = 0; i<noOfRows; i++) {
+
+            String rowWord = String.valueOf(charArray[i]);
+            if(rowWord.toUpperCase().contains(searchWord.toUpperCase()))
+                return true;
+
+            for (int j = 0; j < noOfColumns; j++) {
+                columnWord.append(charArray[j][i]);
+            }
+
+            if (columnWord.toString().toUpperCase().contains(searchWord.toUpperCase()))
+                return true;
+            else
+                columnWord.delete(0, columnWord.length());
+        }
+
+        for(int k = noOfColumns-1; k>=0; k--) {                 //top-right to bottom-left diagonal 1st half triangle
+            for (int i = 0, j = k; i <= k || j >= 0; i++, j--) {
+                rightDiagonalWord.append(charArray[i][j]);
+            }
+            if (rightDiagonalWord.toString().toUpperCase().contains(searchWord.toUpperCase()))
+                return true;
+            else
+                rightDiagonalWord.delete(0, rightDiagonalWord.length());
+
+            for (int i = 1, j = k; i <= k || j >= 1; i++, j--) {   //top-right to bottom-left diagonal 2nd half triangle
+                rightDiagonalWord.append(charArray[i][j]);
+            }
+            if (rightDiagonalWord.toString().toUpperCase().contains(searchWord.toUpperCase()))
+                return true;
+            else
+                rightDiagonalWord.delete(0, rightDiagonalWord.length());
+        }
+
+
+        for(int k = 0; k<noOfColumns; k++) {                    //top-left to bottom-right diagonal 1st half triangle
+            for (int i = 0, j = k; i < noOfColumns-k; i++, j++) {
+                leftDiagonalWord.append(charArray[i][j]);
+            }
+            if (leftDiagonalWord.toString().toUpperCase().contains(searchWord.toUpperCase()))
+                return true;
+            else
+                leftDiagonalWord.delete(0, leftDiagonalWord.length());
+
+            for (int i = k+1, j = k; i < noOfColumns; i++, j++) {   //top-left to bottom-right diagonal 2nd half triangle
+                leftDiagonalWord.append(charArray[i][j]);
+            }
+            if (leftDiagonalWord.toString().toUpperCase().contains(searchWord.toUpperCase()))
+                return true;
+            else
+                leftDiagonalWord.delete(0, leftDiagonalWord.length());
+        }
+
+        return false;
+    }
+}
