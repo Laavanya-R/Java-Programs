@@ -1,0 +1,53 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Paragraph {
+    public static void main(String[] arg) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the Paragraph : ");
+
+        String paragraph = sc.nextLine();
+
+        String[] paragraphInStringArray = paragraph.split(" ");
+        ArrayList<String> paragraphInStringArrayList = new ArrayList<>(Arrays.asList(paragraphInStringArray));
+        System.out.println(paragraphInStringArrayList);
+        System.out.println("Output Paragraph : ");
+
+        for(int i = 0; i< paragraphInStringArrayList.size(); i++) {
+            String previousWord = paragraphInStringArrayList.get(i);
+
+            if(!Character.isLetter(previousWord.charAt(previousWord.length()-1))
+                    && !Character.isDigit(previousWord.charAt(previousWord.length()-1)))
+                previousWord = previousWord.substring(0, previousWord.length()-1);
+
+            int previousWordLength = previousWord.length();
+
+            System.out.print(previousWord + " ");
+
+            for (int j = i + 1; j < paragraphInStringArrayList.size(); j++) {
+                if (Character.toLowerCase(previousWord.charAt(previousWordLength - 1))
+                        == Character.toLowerCase(paragraphInStringArrayList.get(j).charAt(0))) {
+
+                    if(Character.isLetter(paragraphInStringArrayList.get(j).charAt(paragraphInStringArrayList.get(j).length()-1))
+                            || Character.isDigit(paragraphInStringArrayList.get(j).charAt(paragraphInStringArrayList.get(j).length()-1)))
+                        previousWord = paragraphInStringArrayList.get(j);
+                    else
+                        previousWord = paragraphInStringArrayList.get(j).substring(0, paragraphInStringArrayList.get(j).length()-1);
+
+                    previousWordLength = previousWord.length();
+
+                    System.out.print(previousWord + " ");
+
+                    paragraphInStringArrayList.remove(j);
+                    j--;
+
+                }
+            }
+        }
+    }
+}
+/*
+Philosophy of Education is a label applied finely to the study of the purpose, process, nature and ideals of education. It can be considered a branch of both philosophy and education.
+
+ */
