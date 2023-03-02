@@ -3,55 +3,30 @@ import java.util.*;
 public class OverlappingIntervals {
     public static void main(String[] arg) {
 
-        //Scanner sc = new Scanner(System.in);
-        //System.out.print("Enter total number 0f intervals to be manipulated : ");
-        //int noOfIntervals = sc.nextInt();
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter total number 0f intervals to be manipulated : ");
+        int noOfIntervals = sc.nextInt();
 
 
         ArrayList<Integer[][]> intervals = new ArrayList<Integer[][]>();
 
-        Integer[][] singleInterval1 = new Integer[1][2];
-        singleInterval1[0][0] = 97;
-        singleInterval1[0][1] = 98;
-        intervals.add(singleInterval1);
-
-        Integer[][] singleInterval2 = new Integer[1][2];
-        singleInterval2[0][0] = 4;
-        singleInterval2[0][1] = 7;
-        intervals.add(singleInterval2);
-
-        Integer[][] singleInterval3 = new Integer[1][2];
-        singleInterval3[0][0] = 5;
-        singleInterval3[0][1] = 8;
-        intervals.add(singleInterval3);
-
-        Integer[][] singleInterval4 = new Integer[1][2];
-        singleInterval4[0][0] = 5;
-        singleInterval4[0][1] = 34;
-        intervals.add(singleInterval4);
-
-/*
         for(int i=0; i<noOfIntervals; i++) //to get input from console
         {
+            Integer[][] singleInterval = new Integer[1][2];
             System.out.print("Enter interval " + (i+1) + " start : ");
             singleInterval[0][0] = sc.nextInt();
             System.out.print("Enter interval " + (i+1) + " end : ");
             singleInterval[0][1] = sc.nextInt();
-
-            intervals.add(i, singleInterval);
-
-            System.out.println(intervals.get(i)[0][0] + " $$ " + intervals.get(i)[0][1]);
+            intervals.add(singleInterval);
         }
-        System.out.println(intervals.get(0)[0][0] + " ## " + intervals.get(0)[0][1]);
-        System.out.println(intervals.get(1)[0][0] + " ## " + intervals.get(1)[0][1]);
-        System.out.println(intervals.get(2)[0][0] + " ## " + intervals.get(2)[0][1]);
+        System.out.println("The list of input intervals: ");
 
         for(int i=0; i<intervals.size(); i++)
         {
-            System.out.println(intervals.get(i)[0][0] + " loop " + intervals.get(i)[0][1]);
+            System.out.println(intervals.get(i)[0][0] + " " + intervals.get(i)[0][1]);
         }
 
- */
+        System.out.println("\nThe list of exclusive intervals: ");
 
         NextInterval:
         while(intervals.size() != 0)
@@ -71,17 +46,16 @@ public class OverlappingIntervals {
                     intervals.remove(firstInterval);
                     continue NextInterval;
                 }
+                else if(firstIntervalStart <= compareToIntervalStart && firstIntervalEnd >= compareToIntervalEnd)
+                {
+                    intervals.remove(compareToInterval);
+                }
+
             }
             System.out.println(firstIntervalStart + "," + firstIntervalEnd);
             intervals.remove(firstInterval);
 
         }
-
-    }
-    public class Pair{
-        int intervalStart;
-        int intervalEnd;
-
 
     }
 }
