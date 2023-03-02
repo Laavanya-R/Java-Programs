@@ -1,0 +1,28 @@
+public class NonDescendingByOneElementChange {
+    public static void main(){
+
+        int[] inputArray = ArrayFunctions.getArrayInput();
+        ArrayFunctions.displayIntArray(inputArray);
+
+        if(canOneElementChangeGiveNonDescendingArray(inputArray))
+            System.out.print("The given input array can be made non descending by changing 1 element");
+        else
+            System.out.print("The given input array CANNOT be made non descending by changing 1 element");
+    }
+
+    static boolean canOneElementChangeGiveNonDescendingArray(int[] inputArray){
+        int noOfDecrease = 0;
+
+        for(int i = 0; i < inputArray.length-1 ; i++)
+        {
+            if(inputArray[i]<inputArray[i+1])
+                noOfDecrease++;
+        }
+
+        if(noOfDecrease>=2)
+            return false;
+        else
+            return true;
+
+    }
+}
