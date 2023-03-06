@@ -1,0 +1,60 @@
+import java.util.Scanner;
+
+public class printStringInZizZag {
+
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        String inputString = "";
+        int noOfLines = 0;
+        try {
+            System.out.print("Enter the string to be printed in ZigZag fashion : ");
+            inputString = sc.next();
+            System.out.print("Enter the number of line in which the pattern should be printed : ");
+            noOfLines = sc.nextInt();
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+        sc.close();
+        }
+//aaaabbbcccddd     12345678901234567890
+        char[] inputStringInCharArray = inputString.toCharArray();
+        int noOfSpaces = (noOfLines-1)*2 - 1;
+        int noOfAltSpaces = -1;
+        outerFor:
+        for(int i=0; i<noOfLines; i++) {        //to print each line
+
+            for (int k = 0; k < i; k++)         //no of spaces in the beginning
+                System.out.print(" ");
+
+            for (int j = i; j < inputString.length();  ) {
+
+                System.out.print(inputStringInCharArray[j]);        //print character in j position, increment j for every print
+                j++;
+
+                for (int k = 0; k < noOfSpaces && j < inputString.length(); k++, j++)   //print spaces - increment j for every print
+                    System.out.print(" ");
+
+                if(noOfSpaces == (noOfLines-1)*2 - 1)       //no alternate space pattern for 1st and last row
+                    continue;
+
+                if(j >= inputString.length())               //break if j goes past length of input string
+                    break;
+
+                System.out.print(inputStringInCharArray[j]);    //print character in j position, increment j for every print
+                j++;
+
+                for (int k = 0; k < noOfAltSpaces && j < inputString.length(); k++, j++) //print alt spaces - increment j for every print
+                    System.out.print(" ");
+
+            }
+            noOfSpaces = noOfSpaces-2;
+            if(noOfSpaces == -1)
+                noOfSpaces = (noOfLines-1)*2 - 1;
+
+            noOfAltSpaces = noOfAltSpaces+2;
+            System.out.println();
+        }
+
+
+    }
+}
