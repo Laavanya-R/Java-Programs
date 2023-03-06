@@ -1,0 +1,49 @@
+
+public class ProductInArrayIndexOn {
+
+    public static void main(String[] args){
+        int[] inputArray = ArrayFunctions.getArrayInput();
+        ArrayFunctions.displayIntArray(inputArray);
+        productInArrayIndex(inputArray);
+    }
+
+    static void productInArrayIndex(int[] inputArray){
+        int[] prodArray = new int[inputArray.length];
+        for(int i=0; i<inputArray.length; i++) {
+            int prod = 1;
+            for (int j = 0; j < inputArray.length; j++)
+                if (i != j)
+                    prod = prod * inputArray[j];
+            prodArray[i] = prod;
+        }
+        System.out.println("Product of rest of the elements in index position - using 2 for loops : ");
+        ArrayFunctions.displayIntArray(prodArray);
+
+
+        int[] prodOfPreviousNumbers = new int[inputArray.length];
+        int[] prodOfNextNumbers = new int[inputArray.length];
+
+        prodOfPreviousNumbers[0] = 1;
+        for(int i=1; i<inputArray.length; i++) {
+            prodOfPreviousNumbers[i] = prodOfPreviousNumbers[i-1] * inputArray[i-1];
+        }
+        System.out.println("prodOfPreviousNumbers");
+        ArrayFunctions.displayIntArray(prodOfPreviousNumbers);
+
+        prodOfNextNumbers[inputArray.length-1] = 1;
+        for(int i=inputArray.length-2; i>=0; i--) {
+            prodOfNextNumbers[i] = prodOfNextNumbers[i+1] * inputArray[i+1];
+        }
+        System.out.println("prodOfNextNumbers");
+        ArrayFunctions.displayIntArray(prodOfNextNumbers);
+
+        int[] prodArray1 = new int[inputArray.length];
+        for(int i=0; i<inputArray.length; i++) {
+            prodArray1[i] = prodOfPreviousNumbers[i] * prodOfNextNumbers[i];
+        }
+        System.out.println("Product of rest of the elements in index position - O(n) : ");
+        ArrayFunctions.displayIntArray(prodArray1);
+
+    }
+
+}
