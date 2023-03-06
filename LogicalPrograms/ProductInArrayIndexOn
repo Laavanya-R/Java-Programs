@@ -24,24 +24,24 @@ public class ProductInArrayIndexOn {
         int[] prodOfNextNumbers = new int[inputArray.length];
 
         prodOfPreviousNumbers[0] = 1;
+        prodOfNextNumbers[inputArray.length-1] = 1;
+        int j = inputArray.length-2;
+
         for(int i=1; i<inputArray.length; i++) {
             prodOfPreviousNumbers[i] = prodOfPreviousNumbers[i-1] * inputArray[i-1];
+            prodOfNextNumbers[j] = prodOfNextNumbers[j+1] * inputArray[j+1];
+            j--;
         }
-        System.out.println("prodOfPreviousNumbers");
-        ArrayFunctions.displayIntArray(prodOfPreviousNumbers);
-
-        prodOfNextNumbers[inputArray.length-1] = 1;
-        for(int i=inputArray.length-2; i>=0; i--) {
-            prodOfNextNumbers[i] = prodOfNextNumbers[i+1] * inputArray[i+1];
-        }
-        System.out.println("prodOfNextNumbers");
-        ArrayFunctions.displayIntArray(prodOfNextNumbers);
+        //System.out.println("prodOfPreviousNumbers");
+        //ArrayFunctions.displayIntArray(prodOfPreviousNumbers);
+        //System.out.println("prodOfNextNumbers");
+        //ArrayFunctions.displayIntArray(prodOfNextNumbers);
 
         int[] prodArray1 = new int[inputArray.length];
         for(int i=0; i<inputArray.length; i++) {
             prodArray1[i] = prodOfPreviousNumbers[i] * prodOfNextNumbers[i];
         }
-        System.out.println("Product of rest of the elements in index position - O(n) : ");
+        System.out.println("Product of rest of the elements in index position - 2-O(n) : ");
         ArrayFunctions.displayIntArray(prodArray1);
 
     }
