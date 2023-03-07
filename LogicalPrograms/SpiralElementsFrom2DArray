@@ -19,7 +19,7 @@ public class SpiralElementsFrom2DArray {
 
         while(firstRowNum <= lastRowNum && firstColumnNum <= lastColumnNum) {
 
-            for (int i = firstRowNum; i <= lastColumnNum; i++) {
+            for (int i = firstColumnNum; i <= lastColumnNum; i++) {
                 System.out.print(intArray[firstRowNum][i] + ",");
             }
             firstRowNum++;
