@@ -1,0 +1,26 @@
+import java.util.Arrays;
+
+public class ReverseCharacterInPlace {
+    public static void main(String[] args){
+
+        char[] inputArray = {'m','o','h','a','n',' ','i','s',' ','s','m','a','r','t'};
+
+        String str = String.valueOf(inputArray);//char array to string
+        System.out.println(String.valueOf(inputArray));
+
+        String[] words = str.split(" "); //split the string into words
+        int m = 0;
+        for(String word : words){
+            char[] wordInCharArray = word.toCharArray();
+            System.out.println(Arrays.toString(wordInCharArray));
+
+            for(int k= wordInCharArray.length-1; k>=0; k--){
+                inputArray[m] = wordInCharArray[k]; m++;
+            }
+            if(m<inputArray.length)
+                inputArray[m] = ' ';
+            m++;
+        }
+        System.out.println(Arrays.toString(inputArray));
+    }
+}
