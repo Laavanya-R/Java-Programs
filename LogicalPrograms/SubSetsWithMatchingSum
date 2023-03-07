@@ -1,0 +1,47 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class SubSetsWithMatchingSum {
+    public static void main(String[] args){
+        //int[] intArray = ArrayFunctions.get1DIntArrayInput();
+        int[] intArray = { 5, 10, 15, 20, 25, 35 };
+
+        int sum = 0;
+        for (int j : intArray) sum += j;
+
+        if(sum%2 != 0)
+            System.out.println("Matching subsets CANNOT be formed in the given int array - since the sum of all elements is ODD number");
+        else {
+            int matchingSumExpected = sum / 2;
+            if (findSubSetsWithMatchingSum(intArray, matchingSumExpected))
+                System.out.println("Matching subsets with same sum is present in the given int array.");
+            else
+                System.out.println("Matching subsets with same sum is NOT present in the given int array.");
+        }
+    }
+    static boolean findSubSetsWithMatchingSum(int[] intArray, int matchingSumExpected)
+    {
+        List<List<Integer>> subSetList = new ArrayList<>();
+        subSetList.add(new ArrayList<>()); // initially add an empty set to the subSetList
+
+        for (int number : intArray) {       //introducing and adding every number to the sub sets
+            int n = subSetList.size();      //iterate to add the newly introduced number in every subset which is already present in the subSetList
+            for (int i = 0; i < n; i++) {
+                List<Integer> subset = new ArrayList<>(subSetList.get(i));
+                subset.add(number);
+
+                int sum = 0;                    //find sum of each subset
+                for(int j=0; j<subset.size(); j++)
+                    sum += subset.get(j);
+
+                subSetList.add(subset);
+                if(sum == matchingSumExpected)
+                    return true;            //return true and exit - if sum of 1st subset with sum same as matchingSumExpected is obtained
+
+            }
+        }
+
+        return false;
+
+    }
+}
