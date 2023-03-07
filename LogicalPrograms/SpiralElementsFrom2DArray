@@ -1,0 +1,44 @@
+public class SpiralElementsFrom2DArray {
+    public static void main(String[] args){
+        //int[][] intArray = ArrayFunctions.get2DIntArrayInput();
+        int[][] intArray = { { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20}, { 21, 22, 23, 24, 25 }, { 26, 27, 28, 29, 30}};
+        //int[][] intArray = { { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20}, { 21, 22, 23, 24, 25 }, { 26, 27, 28, 29, 30}, {31, 32, 33, 34, 35}};
+        ArrayFunctions.display2DIntArray(intArray);
+        System.out.println("Elements fetched spirally from a 2D Array :-");
+        getClockwiseSpiralFrom2dIntArray(intArray);
+    }
+
+    static void getClockwiseSpiralFrom2dIntArray(int[][] intArray){
+        int noOfRows = intArray.length; //4
+        int noOfColumns = intArray[0].length;//5
+
+        int firstRowNum = 0;
+        int lastRowNum = noOfRows-1;
+        int firstColumnNum = 0;
+        int lastColumnNum = noOfColumns-1;
+
+        while(firstRowNum <= lastRowNum && firstColumnNum <= lastColumnNum) {
+
+            for (int i = firstRowNum; i <= lastColumnNum; i++) {
+                System.out.print(intArray[firstRowNum][i] + ",");
+            }
+            firstRowNum++;
+
+            for (int i = firstRowNum; i <= lastRowNum; i++) {
+                System.out.print(intArray[i][lastColumnNum] + ",");
+            }
+            lastColumnNum--;
+
+            for (int i = lastColumnNum; i >= firstColumnNum; i--) {
+                System.out.print(intArray[lastRowNum][i] + ",");
+            }
+            lastRowNum--;
+
+            for (int i = lastRowNum; i >= firstRowNum; i--) {
+                System.out.print(intArray[i][firstColumnNum] + ",");
+            }
+            firstColumnNum++;
+        }
+
+    }
+}
