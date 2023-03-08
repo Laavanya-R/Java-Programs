@@ -1,0 +1,49 @@
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Scanner;
+
+public class FindElementInArrayQuickly {
+    public static void main(String[] args){
+
+        //BinarySearch Algorithm
+        //Integer[] inputArray = ArrayFunctions.get1DIntegerArrayInput();
+        Integer[] inputArray = { 1, 2, 3, 4, 5 };
+        Collections.sort(Arrays.asList(inputArray));
+        ArrayFunctions.display1DIntegerArray(inputArray);
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter the number to be searched : ");
+        int numberToSearch = sc.nextInt();
+        sc.close();
+
+        int numberPosition = searchElementQuickly(inputArray, numberToSearch);
+        if(numberPosition!=-1)
+            System.out.print("Element is in position : " + numberPosition);
+        else
+            System.out.print("Element is NOT present in the given array");
+    }
+
+    static int searchElementQuickly(Integer[] inputArray,int numberToSearch){
+
+        int arrayLength = inputArray.length;
+
+        int firstPoint = 0;
+        int lastPoint = arrayLength-1; //try odd and even
+
+        while(firstPoint <= lastPoint) {
+            int midPoint = (lastPoint + firstPoint) / 2;
+
+            if (numberToSearch == inputArray[midPoint])
+                return midPoint;
+            else if (numberToSearch < inputArray[midPoint])
+                lastPoint = midPoint-1;
+            else
+                firstPoint = midPoint+1;
+
+        }
+        return -1;
+
+    }
+
+}
