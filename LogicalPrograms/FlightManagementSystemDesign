@@ -1,0 +1,68 @@
+Database/csv file - Flights
+FlightNumber,CarrierName,AircraftType,FlightType,MaxSeatCapacity
+EK513,Emirates,Boeing 777-300ER,International,300
+
+FlightTripChartForAirport
+UniqueFlightTripCode,FlightNumber,AirportCode,StartLocation,DestinationLocation,DepartureDate,DepartureTime,ArrivalAtDestinationDate,ArrivalAtDestinationTime,numberOfTicketsAvailable
+FlTrp00001,EK513,MAA,Chennai,London,10-Mar-2023,8.45AM,10-Mar-2023,4.00PM,150
+//multiple FlightNumbers can be run on the same day - so UniqueFlightTripCode is used
+
+Database/csv file - CustomerDetails
+CustomerID,CustomerName,AccountStatus
+
+Database/csv file - TicketBookingHistory
+TicketNumber,CustomerID,UniqueFlightTripCode,TripType,NoOfAdultPassengers,NoOfChildPassengers,NoOfInfants,MealType,MaxNoOfCheckingBags,MaxNoOfCabinBags,TicketStatus //TripType is OneWay or RoundTrip
+
+Customer Class:
+CustomerID
+CustomerName
+AccountStatus
+
+Flight Class:
+FlightNumber
+CarrierName
+AircraftType
+FlightType //Domestic or International
+MaxSeatCapacity
+
+FlightTrip Class:
+UniqueFlightTripCode
+Flight flight
+StartLocation
+DestinationLocation
+DepartureDate
+DepartureTime
+ArrivalAtDestinationDate
+ArrivalAtDestinationTime
+numberOfTicketsAvailable
+
+Ticket Class: //If trip type is RoundTrip - same Ticket Number, 2 Flight Trips
+TicketNumber
+FlightTrip UniqueFlightTripCode
+TripType //TripType is OneWay or RoundTrip
+NoOfAdultPassengers //12 years and above
+NoOfChildPassengers //2 to 11 years
+NoOfInfants         //<2 years
+MealType
+MaxNoOfCheckingBags
+MaxNoOfCabinBags
+TicketStatus
+
+Modules:
+ViewFlights
+
+    Get StartLocation,DestinationLocation,NumberOfSeats,TripType
+    If Trip is OneWay - get DepartureDate -> Display flights matching the given conditions and if seats are available
+    If Trip is OneWay - get DepartureDate and return date -> Display flights(onward and return) matching the given conditions and if seats are available
+
+BookTicket (OneWay or RoundTrip)
+
+    ViewFlights -> Choose a TicketNumber -> Payment -> Booking Confirmation
+
+ModifyTicket (OneWay or RoundTrip)
+
+    Display Booked Tickets -> Choose a TicketNumber -> Modify Flight schedule, number of passengers, Meal Plan -> payment/Refund -> Confirmation
+
+CancelTicket (OneWay or RoundTrip)
+
+    Display Booked Tickets -> Choose a TicketNumber -> Cancel Ticket -> payment/Refund -> Confirmation
