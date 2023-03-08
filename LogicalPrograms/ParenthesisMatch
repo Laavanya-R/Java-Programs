@@ -1,0 +1,35 @@
+import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeMap;
+
+public class ParenthesisMatch {
+    public static void main(String[] args){
+
+        String str = "So(em(we)ee(like(and this)))th"; //2 5 11 16   8 25 26 27
+        //"Sometimes (when I nest them (my parenthetical) too much (like this (and this))) they get confusing";
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter open parenthesis '(' position : ");
+        Integer position = sc.nextInt();
+
+        TreeMap<Integer,Integer> treeMap = new TreeMap<>();
+
+        for(Integer i = 0; i<str.length(); i++){
+            if(str.charAt(i) == '(') {
+                treeMap.put(i, null);
+            }
+            if(str.charAt(i) == ')') {
+                Set<Integer> keySet = treeMap.descendingKeySet();
+                for (Integer key : keySet) {
+                    if (treeMap.get(key) == null) {
+                        treeMap.put(key, i);
+                        break;
+                    }
+                }
+            }
+        }
+        System.out.println("Close parenthesis ')' position for the given open parenthesis '(' position at "
+                + position + " is : " + treeMap.get(position));
+        System.out.println(treeMap);
+    }
+}
