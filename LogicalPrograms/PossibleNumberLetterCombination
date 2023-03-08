@@ -1,0 +1,69 @@
+import java.util.*;
+
+public class PossibleNumberLetterCombination {
+    public static void main(String[] args){
+        HashMap<Integer, List<Character>> digitAlphabetMap = createDigitAlphabetMapping();
+        System.out.println("Contents of HashMap : " + digitAlphabetMap);
+
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the digits : ");
+        String digits = sc.next();
+
+        findPossibleNumberLetterCombination(digitAlphabetMap, digits);
+
+    }
+    static void findPossibleNumberLetterCombination(HashMap<Integer, List<Character>> digitAlphabetMap,String digits){
+        char[] charArray = digits.toCharArray();
+        Integer firstNumber = Character.getNumericValue(charArray[0]);
+        Integer secondNumber = Character.getNumericValue(charArray[1]);
+
+
+        if(firstNumber <= 1 && secondNumber >1) {
+            System.out.println("0 and 1 does not have associated alphabets ");
+            System.out.print("Possible alphabet combinations for the given digit is : ");
+
+            for (int j = 0; j < digitAlphabetMap.get(secondNumber).size(); j++)
+                System.out.print(digitAlphabetMap.get(secondNumber).get(j).toString() + " ");
+            return;
+        }
+        else if(secondNumber <= 1 && firstNumber > 1) {
+            System.out.println("0 and 1 does not have associated alphabets ");
+            System.out.print("Possible alphabet combinations for the given digit is : ");
+
+            for (int j = 0; j < digitAlphabetMap.get(firstNumber).size(); j++)
+                System.out.print(digitAlphabetMap.get(firstNumber).get(j).toString() + " ");
+            return;
+        }
+        else if(secondNumber <= 1 && firstNumber <= 1) {
+            System.out.print("0 and 1 does not have associated alphabets ");
+            System.out.print("NO Possible alphabet combinations for the given digit");
+            return;
+        }
+        else {
+
+            System.out.print("Possible alphabet combinations for the given digit is : ");
+            for (int i = 0; i < digitAlphabetMap.get(firstNumber).size(); i++) {
+                for (int j = 0; j < digitAlphabetMap.get(secondNumber).size(); j++) {
+                    System.out.print(digitAlphabetMap.get(firstNumber).get(i).toString() + digitAlphabetMap.get(secondNumber).get(j).toString() + " ");
+                }
+            }
+        }
+    }
+
+    static HashMap<Integer, List<Character>> createDigitAlphabetMapping(){
+        HashMap<Integer, List<Character>> digitAlphabetMap = new HashMap<>();
+        char ch = 'a';
+        for(int i = 2; i<=9; i++) {
+            List<Character> charList = new ArrayList<>();
+            for (int j = 1; j <= 3; j++) {
+                charList.add(ch);
+                ch++;
+            }
+            if(i==7 || i==9) {
+                charList.add(ch); ch++;
+            }
+            digitAlphabetMap.put(i, charList);
+        }
+    return digitAlphabetMap;
+    }
+}
