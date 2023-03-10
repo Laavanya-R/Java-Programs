@@ -1,0 +1,62 @@
+import java.util.*;
+
+public class WordRepresentationOfDigits {
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the String : ");
+        String inputString = sc.nextLine().toUpperCase();
+        //System.out.print(inputString);
+        List<Character> inputStringInCharList = new ArrayList<>();
+
+        for (int i = 0; i < inputString.length(); i++)
+            inputStringInCharList.add(inputString.charAt(i));
+
+        List<Integer> digits = new ArrayList<>();
+
+        LinkedHashMap<Integer, String> digitNameMapping = new LinkedHashMap<>(); //HashMap sorted in an order of unique letters
+        digitNameMapping.put(0, "ZERO");                                        //[Z W U X G] [O H F V]
+        digitNameMapping.put(2, "TWO");
+        digitNameMapping.put(4, "FOUR");
+        digitNameMapping.put(6, "SIX");
+        digitNameMapping.put(8, "EIGHT");
+        digitNameMapping.put(1, "ONE");
+        digitNameMapping.put(3, "THREE");
+        digitNameMapping.put(5, "FIVE");
+        digitNameMapping.put(7, "SEVEN");
+        digitNameMapping.put(9, "NINE");
+
+        while (inputStringInCharList.size()!=0) {
+            for (Map.Entry<Integer, String> entry : digitNameMapping.entrySet()) {    //for every digit name in HashMap
+
+                char[] digitNameInCharArray = entry.getValue().toCharArray();
+                int countOfLetters = 0;
+                boolean digitNamePresent = true;
+
+                while(digitNamePresent == true && inputStringInCharList.size()!=0) //repeat until the first digit name is identified as many number of times present in string
+                {
+                                                                                //Find if the whole name is present
+                    for (int j = 0; j < digitNameInCharArray.length; j++)      //every character in digit name
+                        for (int i = 0; i < inputStringInCharList.size(); i++)  //String Input
+                            if (digitNameInCharArray[j] == inputStringInCharList.get(i)) {
+                                countOfLetters++;
+                                break;
+                            }
+                    if (countOfLetters == digitNameInCharArray.length) {        //If present, remove from the string in char list
+                        for (int j = 0; j < digitNameInCharArray.length; j++)
+                            for (int i = 0; i < inputStringInCharList.size(); i++)
+                                if (digitNameInCharArray[j] == inputStringInCharList.get(i)) {
+                                    inputStringInCharList.remove(i);
+                                    i--;
+                                    break;
+                                }
+                        digits.add(entry.getKey());         //add to the disits list
+                        countOfLetters = 0;         //reset counter
+                    }
+                    else digitNamePresent = false;
+                }
+            }
+        }
+        Collections.sort(digits);
+        System.out.println(digits);
+    }
+}
