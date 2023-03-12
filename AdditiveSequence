@@ -1,0 +1,76 @@
+public class AdditiveSequence {
+    public static void main(String[] args) {
+
+        //String str = "199100199";     //AdditiveSequence
+        //String str = "1991001990";    //NOT AdditiveSequence
+        String str = "112358";          //AdditiveSequence
+        //String str = "1910192948";    //AdditiveSequence
+        //String str = "1910192949";    //NOT AdditiveSequence
+        if(isAdditiveSequence(str))
+            System.out.println("The given string is AdditiveSequence");
+        else
+            System.out.println("The given string is NOT AdditiveSequence");
+
+
+    }
+    static boolean isAdditiveSequence(String str) {
+
+        int noOfDigitsInFirstNumber = 1;
+        while (noOfDigitsInFirstNumber < str.length() / 3) {
+
+            int noOfDigitsInSecondNumber = noOfDigitsInFirstNumber;
+
+            while (noOfDigitsInSecondNumber < str.length() / 3) {
+
+                int firstNumberPosition = 0;
+                int secondNumberPosition = firstNumberPosition + noOfDigitsInFirstNumber;
+                int sumPosition = secondNumberPosition + noOfDigitsInSecondNumber;
+
+                int firstNumber = Integer.parseInt(str.substring(firstNumberPosition, noOfDigitsInFirstNumber));
+
+                int secondNumber = Integer.parseInt(str.substring(secondNumberPosition, secondNumberPosition + noOfDigitsInSecondNumber));
+
+                int noOfDigitsInSumPossibility1 = noOfDigitsInFirstNumber + noOfDigitsInSecondNumber;
+                int noOfDigitsInSumPossibility2 = noOfDigitsInSumPossibility1 - 1;
+
+                int sumNumberPossibility1;
+                int sumNumberPossibility2;
+
+                while (sumPosition + noOfDigitsInSumPossibility2 <= str.length()) {
+
+                    if (sumPosition + noOfDigitsInSumPossibility1 <= str.length()) {
+                        sumNumberPossibility1 = Integer.parseInt(str.substring(sumPosition, sumPosition + noOfDigitsInSumPossibility1));
+                    } else
+                        sumNumberPossibility1 = 0;
+
+                    sumNumberPossibility2 = Integer.parseInt(str.substring(sumPosition, sumPosition + noOfDigitsInSumPossibility2));
+                    if (firstNumber + secondNumber == sumNumberPossibility1) {
+                        System.out.println(firstNumber + " + " + secondNumber + " = " + sumNumberPossibility1);
+                        firstNumber = secondNumber;
+                        secondNumber = sumNumberPossibility1;
+
+                        noOfDigitsInSumPossibility1 = String.valueOf(sumNumberPossibility1).length();
+                        noOfDigitsInSumPossibility2 = noOfDigitsInSumPossibility1 - 1;
+                        sumPosition = sumPosition + noOfDigitsInSumPossibility1;
+
+                        if (sumPosition == str.length()) return true;
+                    } else if (firstNumber + secondNumber == sumNumberPossibility2) {
+                        System.out.println(firstNumber + " + " + secondNumber + " = " + sumNumberPossibility2);
+                        firstNumber = secondNumber;
+                        secondNumber = sumNumberPossibility2;
+
+                        noOfDigitsInSumPossibility2 = String.valueOf(sumNumberPossibility2).length();
+                        noOfDigitsInSumPossibility1 = noOfDigitsInSumPossibility2 + 1;
+                        sumPosition = sumPosition + noOfDigitsInSumPossibility2;
+                        if (sumPosition == str.length()) return true;
+                    } else {
+                        break;
+                    }
+                }
+                noOfDigitsInSecondNumber++;
+            }
+            noOfDigitsInFirstNumber++;
+        }
+        return false;
+    }
+}
