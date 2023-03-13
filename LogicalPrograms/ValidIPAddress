@@ -1,0 +1,74 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class ValidIPAddress {
+
+    public static void main(String[] args){
+        //Scanner sc = new Scanner(System.in);
+        //System.out.println("Enter the input string : ");
+        //String inputString = sc.next();
+        String inputString = "10202051"; //10456789   0000    25525511135    101023 11111111  10202051  102034051
+
+
+        if(inputString.length()<4 || inputString.length() >12)
+            System.out.println("The given string cannot be formatted into an IP Address");
+        else{
+            getPossibleIPAddresses(inputString);
+        }
+    }
+    static void getPossibleIPAddresses(String inputString){
+        List<String> possibleIPAddresses = new ArrayList<>();
+        int noOfDigitsInFirstInteger=1, noOfDigitsInSecondInteger=1, noOfDigitsInThirdInteger=1;
+        int firstIntegerPosition = 0;
+
+
+        while(noOfDigitsInFirstInteger<=3) {
+            int firstInteger = Integer.parseInt(inputString.substring(firstIntegerPosition, noOfDigitsInFirstInteger));//firstIntegerPosition is always 0
+            if((noOfDigitsInFirstInteger!=1 && inputString.substring(firstIntegerPosition, noOfDigitsInFirstInteger).charAt(0) == '0') || firstInteger > 255){
+                noOfDigitsInFirstInteger++; continue;}
+            if(inputString.length()-noOfDigitsInFirstInteger <= 9 && inputString.length()-noOfDigitsInFirstInteger >= 3) {
+                int secondIntegerPosition = firstIntegerPosition + String.valueOf(firstInteger).length(); //firstIntegerPosition is always 0
+                while (noOfDigitsInSecondInteger <= 3) {
+
+                    int secondInteger = Integer.parseInt(inputString.substring(secondIntegerPosition, secondIntegerPosition+noOfDigitsInSecondInteger));
+                    if ((noOfDigitsInSecondInteger != 1 && inputString.substring(secondIntegerPosition, secondIntegerPosition+noOfDigitsInSecondInteger).charAt(0) == '0') || secondInteger > 255)
+                        {noOfDigitsInSecondInteger++;continue;}
+
+                    if(inputString.length()-(noOfDigitsInFirstInteger+noOfDigitsInSecondInteger) <= 6 && inputString.length()-(noOfDigitsInFirstInteger+noOfDigitsInSecondInteger) >= 2) {
+                        int thirdIntegerPosition = secondIntegerPosition + String.valueOf(secondInteger).length();
+
+                        while (noOfDigitsInThirdInteger <= 3) {
+                            int thirdInteger = Integer.parseInt(inputString.substring(thirdIntegerPosition, thirdIntegerPosition + noOfDigitsInThirdInteger));
+                            if ((noOfDigitsInThirdInteger != 1 && inputString.substring(thirdIntegerPosition, thirdIntegerPosition + noOfDigitsInThirdInteger).charAt(0) == '0') || thirdInteger > 255) {
+                                noOfDigitsInThirdInteger++;
+                                continue;
+                            }
+
+                            if (inputString.length() - (noOfDigitsInFirstInteger + noOfDigitsInSecondInteger + noOfDigitsInThirdInteger) <= 3 && inputString.length() - (noOfDigitsInFirstInteger + noOfDigitsInSecondInteger + noOfDigitsInThirdInteger) >= 1) {
+                                int fourthIntegerPosition = thirdIntegerPosition + String.valueOf(thirdInteger).length();
+                                int fourthInteger = Integer.parseInt(inputString.substring(fourthIntegerPosition));
+                                if ((inputString.substring(fourthIntegerPosition).length() > 1 && inputString.substring(fourthIntegerPosition).charAt(0) == '0') || fourthInteger > 255) {
+                                    noOfDigitsInThirdInteger++;
+                                    continue;
+                                }
+
+                                String validIPAddress = firstInteger + "." + secondInteger + "." + thirdInteger + "." + fourthInteger;
+                                possibleIPAddresses.add(validIPAddress);
+                            }
+                            if(thirdIntegerPosition + noOfDigitsInThirdInteger == inputString.length()-1) break;
+                            else noOfDigitsInThirdInteger++;
+                        }
+                    }
+                    noOfDigitsInThirdInteger=1;
+                    if(secondIntegerPosition + noOfDigitsInSecondInteger == inputString.length()-2) break;
+                    else noOfDigitsInSecondInteger++;
+                }
+            }
+            noOfDigitsInSecondInteger=1;
+            if(firstIntegerPosition + noOfDigitsInFirstInteger == inputString.length()-3) break;
+            else noOfDigitsInFirstInteger++;
+        }
+        System.out.println("The possible IP addresses for the numbers in the given input string are : " + possibleIPAddresses);
+    }
+}
