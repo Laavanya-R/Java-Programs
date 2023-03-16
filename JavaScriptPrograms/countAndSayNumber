@@ -1,0 +1,32 @@
+let countAndSayNumber = 9;
+
+let countAndSay = new Array();
+countAndSay[0] = String("1"); //base case
+
+
+for(i=1; i<countAndSayNumber; i++){
+    let currentNumber = "";
+    let previousNumber = countAndSay[i-1];
+
+    let count = 0;
+    let char = previousNumber.charAt(0);
+    for(j=0; j<previousNumber.length; j++){
+        if(char == previousNumber.charAt(j)){
+            count++;
+        }
+        else{
+            currentNumber = currentNumber + String(count) + String(char);
+            char = previousNumber.charAt(j);
+            count = 1;
+        }
+
+        if(j == previousNumber.length - 1){
+            currentNumber = currentNumber + String(count) + String(char); break;
+        }
+        
+
+    }
+    countAndSay[i] = currentNumber;
+
+}
+console.log("Count and Say of 9 is " + countAndSay.pop());
