@@ -1,0 +1,37 @@
+let arrayElements = [-60,25,-11,74]
+let arrayOfSubArrays = new Array()
+let arrayOfSums = new Array()
+let target = 10
+
+for(i=0 ; i<arrayElements.length; i++){
+    let subArray = new Array();
+    subArray.push(arrayElements[i]);
+    for(j=i+1;j<arrayElements.length;j++){
+        subArray.push(arrayElements[j]);
+        for(k=j+1;k<arrayElements.length;k++){
+            subArray.push(arrayElements[k]);
+            //console.log("subArray"+subArray);
+            let sum = arrayElements[i]+arrayElements[j]+arrayElements[k];
+            arrayOfSums.push(sum);
+            subArray.pop(arrayElements[k]);
+        }
+        subArray.pop(arrayElements[j]);
+    }
+    subArray.pop(arrayElements[i]);
+}
+
+console.log("arrayOfSums : "+arrayOfSums)
+
+let minDifference = Math.abs(target-arrayOfSums[0]);
+var nearestSum = arrayOfSums[0]; 
+for(m=1;m<arrayOfSums.length;m++){
+    let difference = Math.abs(target-arrayOfSums[m]);
+    if(difference<minDifference){
+        minDifference = difference;
+        nearestSum = arrayOfSums[m];
+        //console.log("nearestSum" + nearestSum);
+    }
+
+}
+
+console.log("Sum closest to the target '" + target + "' is : " + nearestSum)
