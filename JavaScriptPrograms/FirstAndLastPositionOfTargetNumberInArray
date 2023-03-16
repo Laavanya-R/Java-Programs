@@ -1,0 +1,40 @@
+let arrayOfNumbers =  [5,7,7,8,8,10];
+let target = 8;
+
+let firstPosition = 0;
+let lastPosition = arrayOfNumbers.length-1;
+let targetPositions = new Array();
+
+
+while(firstPosition<=lastPosition){
+    
+    let midPosition = parseInt((firstPosition+lastPosition)/2);
+    
+    if(target == arrayOfNumbers[midPosition])
+        {
+            let firstPositionOfTarget = midPosition;
+            while(target == arrayOfNumbers[firstPositionOfTarget-1]){
+                firstPositionOfTarget--;
+            }
+            
+            targetPositions.push(firstPositionOfTarget);
+
+            let lastPositionOfTarget = midPosition;
+            while(target == arrayOfNumbers[lastPositionOfTarget+1]){
+                lastPositionOfTarget++;
+            }
+            targetPositions.push(lastPositionOfTarget);
+
+            if(targetPositions.length == 2) break;
+        }
+    else if(target < arrayOfNumbers[midPosition]){
+        
+        lastPosition = midPosition-1;
+    }
+    else{
+        
+        firstPosition = midPosition+1;
+    }
+}
+
+console.log("Target Positions : " + targetPositions);
