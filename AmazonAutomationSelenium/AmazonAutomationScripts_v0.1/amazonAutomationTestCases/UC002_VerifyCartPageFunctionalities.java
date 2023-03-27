@@ -6,11 +6,17 @@ import amazonAutomationPOMClasses.CartPage;
 import amazonAutomationPOMClasses.HomePage;
 import amazonAutomationPOMClasses.ProductPage;
 import amazonAutomationPOMClasses.SearchResultsPage;
+import net.bytebuddy.description.ModifierReviewable.OfAbstraction;
 
 import org.testng.annotations.BeforeTest;
+
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 
 public class UC002_VerifyCartPageFunctionalities {
@@ -55,7 +61,7 @@ public void TC001_verifyIfProductNameAndPriceAcrossPages() {
 	driver.get(searchResultsPageObject.getFirstResultURL());
 	
 	// Get product name and price from product details page
-	String productNameInProductDetailsPage = productPageObject.getProductName();
+	  String productNameInProductDetailsPage = productPageObject.getProductName();
     String productPriceInProductDetailsPage = productPageObject.getProductPrice();
     System.out.println("productNameInProductDetailsPage : " + productNameInProductDetailsPage);
     System.out.println("productPriceInProductDetailsPage : " + productPriceInProductDetailsPage);
@@ -66,7 +72,7 @@ public void TC001_verifyIfProductNameAndPriceAcrossPages() {
     productPageObject.clickAddToCartButton();
 
     // Go to the cart
-    productPageObject.clickGoToCartIcon();
+    productPageObject.clickCartIcon();
 
     // Get product name and price from cart page
     String productNameInCartPage = cartPageObject.getProductName();
@@ -94,7 +100,7 @@ public void TC001_verifyIfProductNameAndPriceAcrossPages() {
 @Test(priority = 1)
 public void TC002_verifyIfMultipleProductsCanBeAddedToCart() {
 	// Search a product
-	String searchText1 = "The Theory Of Everything";
+	String searchText1 = "Robinson Crusoe";
 	homePageObject.searchProductAndSubmit(searchText1);
     // Click on the first search result
 	driver.get(searchResultsPageObject.getFirstResultURL());
@@ -110,7 +116,7 @@ public void TC002_verifyIfMultipleProductsCanBeAddedToCart() {
     productPageObject.clickAddToCartButton();
     
 	// Search another product
-	String searchText3 = "OnePlus 11 5G";
+	String searchText3 = "gullivers travels by jonathan swift";
 	homePageObject.searchProductAndSubmit(searchText3);
     // Click on the first search result
 	driver.get(searchResultsPageObject.getFirstResultURL());
@@ -119,8 +125,10 @@ public void TC002_verifyIfMultipleProductsCanBeAddedToCart() {
 
     
     // Go to the cart
-    //productPageObject.clickGoToCartIcon();
-    driver.findElement(By.xpath("//*[@id=\"nav-cart\"]"));
+    //productPageObject.clickCartIcon();
+    //driver.findElement(By.id("nav-cart")).click();//*[@id="nav-cart"]
+    productPageObject.clickGoToCartButton();
+    
     
     try {
 		Thread.sleep(10000);
@@ -130,10 +138,21 @@ public void TC002_verifyIfMultipleProductsCanBeAddedToCart() {
 	}
     
     //validate if the products added are listed with correct pricing and total adds up
-    cartPageObject.getListOfAllProductPrice();
     //Add each price and verify if it equals total
+    List<WebElement> listOfAllProductPrice = cartPageObject.getListOfAllProductPrice();
+    int sumOfAllProductPrice = 0;
+    for(WebElement priceElement : listOfAllProductPrice) {
+    	 System.out.println("priceElement.getText()" + priceElement.getText());
+    	 if(!priceElement.getText().equals("  ")) { //try to not fetch the unwanted span tag
+    		 sumOfAllProductPrice = sumOfAllProductPrice + (int)Float.parseFloat(priceElement.getText());//need to multiply with quantity if qty  is more than 1
+    	 }
+    	 }
+    
+    System.out.println("sumOfAllProductPrice" + sumOfAllProductPrice);
+    
+    System.out.println("cartPageObject.getSubTotal()" + (int)Float.parseFloat(cartPageObject.getSubTotal()));
 
-
+    Assert.assertEquals(sumOfAllProductPrice, (int)Float.parseFloat(cartPageObject.getSubTotal()));
 
 }
 @Test(priority = 1)
