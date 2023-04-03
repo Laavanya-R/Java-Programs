@@ -1,0 +1,51 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class PermutationsOfAGivenString {
+
+    public static void main(String[] args){
+
+        //Scanner sc = new Scanner(System.in);
+        //System.out.print("Enter the Input string : ");
+        //String inputString = sc.next();
+        String inputString = "GOD";
+
+        List<String> tempPermutationList = new ArrayList<String>();
+        for(int i=0; i<inputString.length(); i++){
+            StringBuilder sb = new StringBuilder();
+            sb.append(inputString.charAt(i));
+            for(int j=0; j<inputString.length(); j++){
+                if(i != j){
+                    sb.append(inputString.charAt(j));
+                }
+            }
+            tempPermutationList.add(sb.toString());
+        }
+        System.out.println(tempPermutationList);
+
+        List<String> PermutationList = new ArrayList<String>();
+        for(String str : tempPermutationList) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(str.charAt(0));
+            sb.append(str.charAt(1));
+            sb.append(str.charAt(2));
+            PermutationList.add(sb.toString());
+            System.out.println(sb.toString());
+
+            sb.delete(0,sb.length());
+
+            sb.append(str.charAt(0));
+            sb.append(str.charAt(2));
+            sb.append(str.charAt(1));
+            PermutationList.add(sb.toString());
+
+        }
+
+        System.out.println("Permutations of the given string is "  + PermutationList);
+
+
+    }
+
+
+}
