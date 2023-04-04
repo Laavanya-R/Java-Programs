@@ -1,0 +1,55 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class LongestMatchingSubsequence {
+
+    public static void main(String[] args){
+
+        String str1 = "AGGTAB";
+        String str2 = "GXTXAYB";
+        List<String> str1Sequences = subSequences(str1);
+        List<String> str2Sequences = subSequences(str2);
+
+        List<String> matchingSequences = new ArrayList<>();
+        int matchingSequenceLength = 0;
+        int matchingSequencePositionInSequence2 = 0;
+
+        for(int i = 0; i<str1Sequences.size(); i++)
+            for(int j = 0; j<str2Sequences.size(); j++)
+                if(str1Sequences.get(i).equals(str2Sequences.get(j))) {
+                    matchingSequences.add(str2Sequences.get(j));
+                    if(str2Sequences.get(j).length() > matchingSequenceLength) {
+                        matchingSequenceLength = str2Sequences.get(j).length();
+                        matchingSequencePositionInSequence2 = j;
+                    }
+
+                }
+
+        System.out.println("The length of the the longest matching sequence is : " + matchingSequenceLength);
+        System.out.println("The longest matching sequence is : " + str2Sequences.get(matchingSequencePositionInSequence2));
+
+
+
+    }
+
+    public static List<String> subSequences(String string){
+
+        List<String> tempSubStringList = new ArrayList<>();
+        List<String> subStringList = new ArrayList<>();
+        //tempSubStringList.add(String.valueOf(string.charAt(0)));
+        subStringList.add(String.valueOf(string.charAt(0)));
+
+        for(int i=1 ; i<string.length(); i++){
+            tempSubStringList.add(String.valueOf(string.charAt(i)));
+            for(int j = 0; j<subStringList.size(); j++){
+                String str = subStringList.get(j) + string.charAt(i);
+                tempSubStringList.add(str);
+            }
+            subStringList.addAll(tempSubStringList);
+            tempSubStringList.clear();
+        }
+         System.out.println(subStringList);
+        return subStringList;
+
+    }
+}
