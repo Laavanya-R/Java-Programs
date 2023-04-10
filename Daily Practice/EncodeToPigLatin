@@ -1,0 +1,30 @@
+import java.util.Scanner;
+
+public class EncodeToPigLatin {
+
+    public static void main(String[] args){
+        //Scanner sc = new Scanner(System.in);
+        //System.out.print("Enter the Input string : ");
+        //String inputString = sc.next();
+        //String inputString = "Have a happy super good nice day";
+        String inputString = "nevermind youve got them";
+
+        String stringEncodedToPigLatin = convertStringToPigLatin(inputString);
+
+        System.out.println(stringEncodedToPigLatin);
+    }
+
+    static String convertStringToPigLatin(String inputString){
+
+        String[] strArray = inputString.split(" ");
+        StringBuilder sb = new StringBuilder();
+
+        for(int i = 0; i < strArray.length; i++){
+            sb.append(strArray[i].substring(1) + strArray[i].charAt(0) + "ay ");
+
+        }
+
+        return sb.toString();
+
+    }
+}
