@@ -1,42 +1,43 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class LongestIncreasingSubsequence {
     public static void main(String[] args){
 
-        int[] givenIntSequence = {10, 22, 30, 71, 9, 33, 21, 50, 41, 60 }; //10, 22, 30, 71, 9, 33, 21, 50, 41, 60    10,9,2,5,3,7,101,18    0,1,0,3,2,3
+        int[] givenIntSequence = {7,7,7,7,7}; //10, 22, 30, 71, 9, 33, 21, 50, 41, 60    10,9,2,5,3,7,101,18    0,1,0,3,2,3   7,7,7,7,7
         longestIncreasingSubsequence(givenIntSequence);
     }
     static void longestIncreasingSubsequence(int[] givenIntSequence){
 
-        //int maxSubSequenceLength = 1;
-        //List<List<Integer>> listOfIncreasingSubSequences = new ArrayList<List<Integer>> ();
-        List<Integer> longestSubSequence = new ArrayList<Integer>();
+        List<List<Integer>> subSequences = new ArrayList<> ();
+        subSequences.add(new ArrayList<>(Arrays.asList(givenIntSequence[0])));
 
-        for(int i = 0; i<givenIntSequence.length; i++){
-            List<Integer> subSequence = new ArrayList<Integer>();
-            subSequence.add(givenIntSequence[i]);
+        for(int j = 1; j<givenIntSequence.length; j++){
+            List<List<Integer>> tempSubSequences = new ArrayList<> ();
+            tempSubSequences.add(new ArrayList<>(Arrays.asList(givenIntSequence[j])));
 
-            //int subSequenceLength = 1;
+            for(int k = 0; k<subSequences.size(); k++) {
+                if (givenIntSequence[j] > subSequences.get(k).get(subSequences.get(k).size() - 1)) {
+                    ArrayList<Integer> temp = new ArrayList<>(subSequences.get(k));
+                    temp.add(givenIntSequence[j]);
 
-            for(int j = i+1; j<givenIntSequence.length; j++){
-
-                if(givenIntSequence[j] > subSequence.get(subSequence.size()-1)) {
-                    subSequence.add(givenIntSequence[j]);
-                    //subSequenceLength++;
+                    tempSubSequences.add(temp);
                 }
             }
+            subSequences.addAll(tempSubSequences);
+        }
 
-            if(subSequence.size()>longestSubSequence.size()) {
-                //maxSubSequenceLength = subSequenceLength;
-                longestSubSequence.clear();
-                longestSubSequence.addAll(subSequence);
+        int maxLength = 0;
+        int maxLengthPos = 0;
+        for(int i = 0; i<subSequences.size(); i++)
+            if(subSequences.get(i).size() > maxLength) {
+                maxLength = subSequences.get(i).size();
+                maxLengthPos = i;
             }
 
-            //listOfIncreasingSubSequences.add(subSequence);
-        }
-        System.out.println("Length of the longest subsequence - " + longestSubSequence.size());
-        System.out.println("The longest subsequence is - " + longestSubSequence);
-
+        System.out.println("Length of the longest subsequence - " + maxLength);
+        System.out.println("The longest subsequence is - " + subSequences.get(maxLengthPos));
     }
+
 }
