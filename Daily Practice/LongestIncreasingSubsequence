@@ -4,32 +4,36 @@ import java.util.List;
 public class LongestIncreasingSubsequence {
     public static void main(String[] args){
 
-        int[] givenIntSequence = { 10, 22, 9, 33, 21, 50, 41, 60};
+        int[] givenIntSequence = {10, 22, 30, 71, 9, 33, 21, 50, 41, 60 }; //10, 22, 30, 71, 9, 33, 21, 50, 41, 60    10,9,2,5,3,7,101,18    0,1,0,3,2,3
         longestIncreasingSubsequence(givenIntSequence);
     }
     static void longestIncreasingSubsequence(int[] givenIntSequence){
 
-        int maxSubSequenceLength = 1;
+        //int maxSubSequenceLength = 1;
+        //List<List<Integer>> listOfIncreasingSubSequences = new ArrayList<List<Integer>> ();
         List<Integer> longestSubSequence = new ArrayList<Integer>();
 
         for(int i = 0; i<givenIntSequence.length; i++){
             List<Integer> subSequence = new ArrayList<Integer>();
             subSequence.add(givenIntSequence[i]);
 
-            int subSequenceLength = 1;
+            //int subSequenceLength = 1;
 
-            for(int j = i; j<givenIntSequence.length-1; j++){
+            for(int j = i+1; j<givenIntSequence.length; j++){
 
-                if(givenIntSequence[j+1] > subSequence.get(subSequence.size()-1)) {
-                    subSequence.add(givenIntSequence[j+1]);
-                    subSequenceLength++;
+                if(givenIntSequence[j] > subSequence.get(subSequence.size()-1)) {
+                    subSequence.add(givenIntSequence[j]);
+                    //subSequenceLength++;
                 }
             }
 
-            if(subSequenceLength>maxSubSequenceLength) {
-                maxSubSequenceLength = subSequenceLength;
+            if(subSequence.size()>longestSubSequence.size()) {
+                //maxSubSequenceLength = subSequenceLength;
+                longestSubSequence.clear();
                 longestSubSequence.addAll(subSequence);
             }
+
+            //listOfIncreasingSubSequences.add(subSequence);
         }
         System.out.println("Length of the longest subsequence - " + longestSubSequence.size());
         System.out.println("The longest subsequence is - " + longestSubSequence);
