@@ -1,0 +1,38 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class LongestIncreasingSubsequence {
+    public static void main(String[] args){
+
+        int[] givenIntSequence = { 10, 22, 9, 33, 21, 50, 41, 60};
+        longestIncreasingSubsequence(givenIntSequence);
+    }
+    static void longestIncreasingSubsequence(int[] givenIntSequence){
+
+        int maxSubSequenceLength = 1;
+        List<Integer> longestSubSequence = new ArrayList<Integer>();
+
+        for(int i = 0; i<givenIntSequence.length; i++){
+            List<Integer> subSequence = new ArrayList<Integer>();
+            subSequence.add(givenIntSequence[i]);
+
+            int subSequenceLength = 1;
+
+            for(int j = i; j<givenIntSequence.length-1; j++){
+
+                if(givenIntSequence[j+1] > subSequence.get(subSequence.size()-1)) {
+                    subSequence.add(givenIntSequence[j+1]);
+                    subSequenceLength++;
+                }
+            }
+
+            if(subSequenceLength>maxSubSequenceLength) {
+                maxSubSequenceLength = subSequenceLength;
+                longestSubSequence.addAll(subSequence);
+            }
+        }
+        System.out.println("Length of the longest subsequence - " + longestSubSequence.size());
+        System.out.println("The longest subsequence is - " + longestSubSequence);
+
+    }
+}
