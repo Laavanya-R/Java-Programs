@@ -1,0 +1,18 @@
+public class DoesStringContainAllAlphabets {
+    public static void main(String[] args) {
+        //Scanner sc = new Scanner(System.in);
+        //System.out.print("Enter the Input string : ");
+        //String inputString = sc.next();
+        String inputString = "The quick fox jumps over the lazy dog"; //abcdefghijklmnopqrstuvwxyz   The quick brown fox jumps over the lazy dog
+        boolean alphabetNotPresent = false;
+        String inputStringInUpperCase = inputString.toUpperCase();
+        System.out.println(inputStringInUpperCase);
+        for(char ch = 65; ch <= 90; ch++ )
+            if (!inputStringInUpperCase.contains(String.valueOf(ch))) alphabetNotPresent = true;
+
+        if(alphabetNotPresent)
+            System.out.println("The given input string does not have all alphabets");
+        else
+            System.out.println("The given input string contains all alphabets");
+    }
+}
