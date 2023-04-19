@@ -1,0 +1,24 @@
+public class DoesGivenStringHasUniqueCharacters {
+    public static void main(String[] args) {
+        //Scanner sc = new Scanner(System.in);
+        //System.out.print("Enter the Input string : ");
+        //String inputString = sc.next();
+        String inputString = "java2blog"; //    index
+        if(doesGivenStringHasUniqueCharacters(inputString) == -1)
+            System.out.println("The given input string has duplicate characters");
+        else
+            System.out.println("The given input string does not have duplicate characters");
+
+    }
+
+    public static int doesGivenStringHasUniqueCharacters(String inputString){
+
+        for(int i = 0; i < inputString.length(); i++) {
+            for(int j = i+1; j < inputString.length(); j++) {
+                if(inputString.charAt(i) == inputString.charAt(j)) return -1;
+            }
+
+        }
+        return 0;
+    }
+}
