@@ -1,0 +1,33 @@
+public class FindIncreasingOrDecreasingOrder {
+    public static void main(String[] args) {
+//        Scanner sc = new Scanner(System.in);
+//        System.out.print("Enter the Input Array size : ");
+//        int intArraySize = sc.nextInt();
+//        System.out.print("Enter the Input Array values : ");
+//        int[] intArrayValues = new int[intArraySize];
+//        for(int i = 0; i<intArraySize; i++)
+//            intArrayValues[i] = sc.nextInt();
+
+
+        int[] inputArrayVal = {7,6,4,5,3,1 };      //7,6,4,3,1     1, 3, 4, 6, 7        7,6,4,5,3,1
+        findIncreasingOrDecreasingOrder(inputArrayVal);
+    }
+    public static void findIncreasingOrDecreasingOrder(int[] inputArrayVal){
+
+        boolean increasing = false;
+        boolean decreasing = false;
+
+        for(int i = 0; i < inputArrayVal.length-1; i++) {
+            if(inputArrayVal[i] <= inputArrayVal[i+1]) increasing = true;
+            else decreasing = true;
+        }
+
+        if(increasing && !decreasing)
+            System.out.println("The given input int array is INCREASING");
+        else if(!increasing && decreasing)
+            System.out.println("The given input int array is DECREASING");
+        else
+            System.out.println("The given input int array is neither Increasing or Decreasing");
+    }
+
+}
