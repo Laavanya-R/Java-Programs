@@ -1,0 +1,49 @@
+import com.sun.jdi.Value;
+
+import java.util.HashMap;
+import java.util.Set;
+import java.util.TreeSet;
+
+public class BalancedExpression {
+    public static void main(String[] args) {
+        //Scanner sc = new Scanner(System.in);
+        //System.out.print("Enter the Input string : ");
+        //String inputString = sc.next();
+        String inputString = "[][()][(){}](]";
+        if(inputString.length()%2 != 0)
+            System.out.println("There are odd number of characters in the given input. Hence there cannot be matching parenthesis");
+        else
+            findIfTheExpressionIsBalanced(inputString);
+    }
+    public static void findIfTheExpressionIsBalanced(String inputString){
+
+        HashMap<Character, Character> hmap = new HashMap<>();
+        hmap.put('[', ']');
+        hmap.put('(', ')');
+        hmap.put('{', '}');
+
+        Set keySet = hmap.keySet();
+        Set valueSet = new TreeSet(hmap.values());
+//        System.out.println(hmap.keySet());
+//        System.out.println(hmap.values());
+
+        StringBuilder sb = new StringBuilder();
+        forLoop:
+        for(int i = 0; i < inputString.length(); i++) {
+            if (keySet.contains(inputString.charAt(i))){
+                sb.append(inputString.charAt(i));
+            }
+            else if(valueSet.contains(inputString.charAt(i)))
+                if ((inputString.charAt(i)) == hmap.get(sb.charAt(sb.length()-1))) {
+//                    System.out.println("inputString.charAt(i) - " + inputString.charAt(i));
+//                    System.out.println(hmap.get(sb.charAt(sb.length()-1)));
+                    sb.deleteCharAt(sb.length()-1);
+                    continue forLoop;
+                }
+                else{
+                    System.out.println("The parenthesis are not matching"); break;
+                }
+
+        }
+    }
+    }
